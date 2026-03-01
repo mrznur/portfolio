@@ -1,0 +1,99 @@
+{
+  "person": {
+    "name": "MD Mahmudun Nur Miraz",
+    "location": "Dhaka, Bangladesh",
+    "email": "mahmudunmiraz@gmail.com",
+    "links": {
+      "github": "https://github.com/mrznur",
+      "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/"
+    },
+    "summary": "Final-year Computer Science student with interest and experience in AI/ML research and full-stack software development.",
+    "about": "Final-year Computer Science student with hands-on experience in AI/ML research and full-stack application development. Strong foundation in Python, PyTorch, and modern React-based frontend development. Experienced in building experimental ML pipelines, reasoning-oriented LLM workflows, and REST-style backend systems. Interested in applied AI, reasoning systems, and scalable software development across the full Machine Learning SDLC",
+    "whatIDo": [
+      {
+        "title": "Software Development",
+        "description": "Building full-stack applications with modern frameworks. From REST APIs to responsive frontends, I enjoy creating complete solutions that solve real problems."
+      },
+      {
+        "title": "AI/ML Research",
+        "description": "Exploring reasoning systems and language model distillation. Currently working on Tree-of-Thought approaches for making smaller models smarter."
+      },
+      {
+        "title": "Continuous Learning",
+        "description": "Always experimenting with new technologies and methodologies. From PyTorch pipelines to React patterns, I'm constantly expanding my technical toolkit."
+      }
+    ]
+  },
+
+  "skills": {
+    "languages": ["Python", "JavaScript", "C", "C++", "HTML", "CSS"],
+    "ml": ["PyTorch", "NumPy"],
+    "backend": ["Flask", "REST API"],
+    "frontend": ["React", "Tailwind CSS"],
+    "database": ["SQLite", "MySQL"],
+    "tools": ["Git", "GitHub"]
+  },
+
+  "research": {
+    "title": "Tree-of-Thought Distillation for Small Language Models",
+    "points": [
+      "Generating reasoning traces using branching and pruning",
+      "Preparing datasets from reasoning traces",
+      "Fine-tuning and evaluation for small language models"
+    ]
+  },
+
+  "projects": [
+    {
+      "title": "Bashpo — Online Game Marketplace",
+      "stack": ["Flask", "SQLite", "React", "Tailwind CSS"],
+      "points": [
+        "User authentication and role-based access",
+        "Product listing and purchase flow",
+        "SQLite database integration"
+      ],
+      "repo": "https://github.com/mrznur/bashpo-mastered",
+      "image": null
+    },
+    {
+      "title": "Weather Forecast Web Application",
+      "stack": ["React", "Tailwind CSS", "WeatherAPI"],
+      "points": [
+        "Real-time weather display",
+        "7-day forecast",
+        "Modular structure with separated components"
+      ],
+      "repo": "https://github.com/mrznur/weather",
+      "image": null
+    },
+    {
+      "title": "Book Wolf",
+      "stack": ["React", "JavaScript"],
+      "points": [
+        "Basic reading/bookmarking features",
+        "React component structure",
+        "Client-side interactions"
+      ],
+      "repo": "https://github.com/mrznur/book-wolf",
+      "image": null
+    }
+  ],
+
+  "education": {
+    "title": "BRAC University — BSc in Computer Science",
+    "meta": "Sep 2021 – Present • Final Semester"
+  },
+
+  "experience": [
+    {
+      "title": "Transcriber & Translator — CS50 (Harvard)",
+      "time": "2022",
+      "desc": "Transcription and translation of technical lecture content."
+    },
+    {
+      "title": "Private Tutor (Math, Science, Programming, IELTS)",
+      "time": "2020 – 2025",
+      "desc": "Tutoring in math, science, programming, and IELTS preparation."
+    }
+  ]
+}
