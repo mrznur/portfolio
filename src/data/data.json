@@ -93,7 +93,8 @@
         "Modular structure with separated components"
       ],
       "repo": "https://github.com/mrznur/weather",
-      "image": null
+      "image": null,
+      "live": "https://bashpo-mastered.onrender.com/"
     },
     {
       "title": "Book Wolf",
