@@ -28,13 +28,22 @@ export default function ProjectCard({ project }) {
         ))}
       </ul>
 
-      {project.repo ? (
+      <div className="flex justify-between">
+        {project.repo ? (
         <div className="mt-4">
           <ButtonLink href={project.repo} variant="secondary">
             Repository
           </ButtonLink>
         </div>
       ) : null}
+      {project.live ? (
+        <div className="mt-4">
+          <ButtonLink href={project.live} variant="secondary">
+            Live Demo
+          </ButtonLink>
+        </div>
+      ) : null}
+      </div>
     </Card>
   );
 }

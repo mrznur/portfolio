@@ -24,16 +24,36 @@
       }
     ]
   },
-
   "skills": {
-    "languages": ["Python", "JavaScript", "C", "C++", "HTML", "CSS"],
-    "ml": ["PyTorch", "NumPy"],
-    "backend": ["Flask", "REST API"],
-    "frontend": ["React", "Tailwind CSS"],
-    "database": ["SQLite", "MySQL"],
-    "tools": ["Git", "GitHub"]
+    "languages": [
+      "Python",
+      "JavaScript",
+      "C",
+      "C++",
+      "HTML",
+      "CSS"
+    ],
+    "ml": [
+      "PyTorch",
+      "NumPy"
+    ],
+    "backend": [
+      "Flask",
+      "REST API"
+    ],
+    "frontend": [
+      "React",
+      "Tailwind CSS"
+    ],
+    "database": [
+      "SQLite",
+      "MySQL"
+    ],
+    "tools": [
+      "Git",
+      "GitHub"
+    ]
   },
-
   "research": {
     "title": "Tree-of-Thought Distillation for Small Language Models",
     "points": [
@@ -42,22 +62,31 @@
       "Fine-tuning and evaluation for small language models"
     ]
   },
-
   "projects": [
     {
       "title": "Bashpo — Online Game Marketplace",
-      "stack": ["Flask", "SQLite", "React", "Tailwind CSS"],
+      "stack": [
+        "Flask",
+        "SQLite",
+        "React",
+        "Tailwind CSS"
+      ],
       "points": [
         "User authentication and role-based access",
         "Product listing and purchase flow",
         "SQLite database integration"
       ],
       "repo": "https://github.com/mrznur/bashpo-mastered",
-      "image": null
+      "image": null,
+      "live": "https://bashpo-mastered.onrender.com/"
     },
     {
       "title": "Weather Forecast Web Application",
-      "stack": ["React", "Tailwind CSS", "WeatherAPI"],
+      "stack": [
+        "React",
+        "Tailwind CSS",
+        "WeatherAPI"
+      ],
       "points": [
         "Real-time weather display",
         "7-day forecast",
@@ -68,7 +97,10 @@
     },
     {
       "title": "Book Wolf",
-      "stack": ["React", "JavaScript"],
+      "stack": [
+        "React",
+        "JavaScript"
+      ],
       "points": [
         "Basic reading/bookmarking features",
         "React component structure",
@@ -76,14 +108,30 @@
       ],
       "repo": "https://github.com/mrznur/book-wolf",
       "image": null
+    },
+    {
+      "title": "SwiftCart",
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React"
+      ],
+      "points": [
+        "E-commerce landing page layout",
+        "Product listing and trending section UI",
+        "Cart interface structure",
+        "Responsive design implementation"
+      ],
+      "repo": "https://github.com/mrznur/SwiftCart-A2",
+      "live": "https://voluble-buttercream-dfda92.netlify.app/",
+      "image": null
     }
   ],
-
   "education": {
     "title": "BRAC University — BSc in Computer Science",
     "meta": "Sep 2021 – Present • Final Semester"
   },
-
   "experience": [
     {
       "title": "Transcriber & Translator — CS50 (Harvard)",
