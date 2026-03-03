@@ -68,7 +68,9 @@
       "stack": [
         "Flask",
         "SQLite",
-        "React",
+        "HTML",
+        "JavaScript",
+        "CSS",
         "Tailwind CSS"
       ],
       "points": [
