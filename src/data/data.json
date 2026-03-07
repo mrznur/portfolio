@@ -7,7 +7,7 @@
       "github": "https://github.com/mrznur",
       "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/"
     },
-    "summary": "Final-year Computer Science student with interest and experience in AI/ML research and full-stack software development.",
+    "summary": "Final-year Computer Science student with interest and experience in AI/ML research and full-stack(MERN) software development.",
     "about": "Final-year Computer Science student with hands-on experience in AI/ML research and full-stack application development. Strong foundation in Python, PyTorch, and modern React-based frontend development. Experienced in building experimental ML pipelines, reasoning-oriented LLM workflows, and REST-style backend systems. Interested in applied AI, reasoning systems, and scalable software development across the full Machine Learning SDLC",
     "whatIDo": [
       {
@@ -27,9 +27,9 @@
   "skills": {
     "languages": ["Python", "JavaScript", "C", "C++", "HTML", "CSS"],
     "ml": ["PyTorch", "NumPy"],
-    "backend": ["Flask", "REST API"],
+    "backend": ["Flask", "REST API","Node/Express.js"],
     "frontend": ["React", "Tailwind CSS"],
-    "database": ["SQLite", "MySQL"],
+    "database": ["SQLite", "MySQL", "MongoDB"],
     "tools": ["Git", "GitHub"]
   },
   "research": {
