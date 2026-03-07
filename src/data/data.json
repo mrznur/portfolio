@@ -25,34 +25,12 @@
     ]
   },
   "skills": {
-    "languages": [
-      "Python",
-      "JavaScript",
-      "C",
-      "C++",
-      "HTML",
-      "CSS"
-    ],
-    "ml": [
-      "PyTorch",
-      "NumPy"
-    ],
-    "backend": [
-      "Flask",
-      "REST API"
-    ],
-    "frontend": [
-      "React",
-      "Tailwind CSS"
-    ],
-    "database": [
-      "SQLite",
-      "MySQL"
-    ],
-    "tools": [
-      "Git",
-      "GitHub"
-    ]
+    "languages": ["Python", "JavaScript", "C", "C++", "HTML", "CSS"],
+    "ml": ["PyTorch", "NumPy"],
+    "backend": ["Flask", "REST API"],
+    "frontend": ["React", "Tailwind CSS"],
+    "database": ["SQLite", "MySQL"],
+    "tools": ["Git", "GitHub"]
   },
   "research": {
     "title": "Tree-of-Thought Distillation for Small Language Models",
@@ -64,15 +42,28 @@
   },
   "projects": [
     {
-      "title": "Bashpo — Online Game Marketplace",
+      "title": "QuickHire — Job Board Platform",
       "stack": [
-        "Flask",
-        "SQLite",
-        "HTML",
-        "JavaScript",
-        "CSS",
-        "Tailwind CSS"
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Tailwind CSS",
+        "DaisyUI"
       ],
+      "points": [
+        "Full-stack job board for browsing and applying to jobs",
+        "Search and filter jobs by title, company, category, and location",
+        "Admin dashboard to manage job listings and applications",
+        "RESTful API with Express and MongoDB for backend data management"
+      ],
+      "repo": "https://github.com/mrznur/QSL-QuickHire",
+      "image": null,
+      "live": "https://qsl-quick-hire.vercel.app/"
+    },
+    {
+      "title": "Bashpo — Online Game Marketplace",
+      "stack": ["Flask", "SQLite", "HTML", "JavaScript", "CSS", "Tailwind CSS"],
       "points": [
         "User authentication and role-based access",
         "Product listing and purchase flow",
@@ -84,11 +75,7 @@
     },
     {
       "title": "Weather Forecast Web Application",
-      "stack": [
-        "React",
-        "Tailwind CSS",
-        "WeatherAPI"
-      ],
+      "stack": ["React", "Tailwind CSS", "WeatherAPI"],
       "points": [
         "Real-time weather display",
         "7-day forecast",
@@ -100,10 +87,7 @@
     },
     {
       "title": "Book Wolf",
-      "stack": [
-        "React",
-        "JavaScript"
-      ],
+      "stack": ["React", "JavaScript"],
       "points": [
         "Basic reading/bookmarking features",
         "React component structure",
@@ -114,12 +98,7 @@
     },
     {
       "title": "SwiftCart",
-      "stack": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "React"
-      ],
+      "stack": ["HTML", "CSS", "JavaScript", "React"],
       "points": [
         "E-commerce landing page layout",
         "Product listing and trending section UI",
