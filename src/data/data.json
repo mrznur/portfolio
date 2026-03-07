@@ -97,17 +97,17 @@
       "image": null
     },
     {
-      "title": "SwiftCart",
-      "stack": ["HTML", "CSS", "JavaScript", "React"],
+      "title": "CS — Ticket System",
+      "stack": ["React", "Vite", "Tailwind CSS", "React Toastify"],
       "points": [
-        "E-commerce landing page layout",
-        "Product listing and trending section UI",
-        "Cart interface structure",
-        "Responsive design implementation"
+        "Customer support ticket management system",
+        "Track ticket status with In Progress and Resolved categories",
+        "Interactive UI for adding and completing tickets",
+        "Responsive design with modern gradient cards and vector graphics"
       ],
-      "repo": "https://github.com/mrznur/SwiftCart-A2",
-      "live": "https://voluble-buttercream-dfda92.netlify.app/",
-      "image": null
+      "repo": "https://github.com/mrznur/customer-support",
+      "image": null,
+      "live": "https://ct-customerticket.netlify.app/"
     }
   ],
   "education": {
