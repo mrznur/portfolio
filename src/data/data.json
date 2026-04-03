@@ -5,125 +5,130 @@
     "email": "mahmudunmiraz@gmail.com",
     "links": {
       "github": "https://github.com/mrznur",
-      "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/"
+      "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/",
+      "portfolio": "https://miraz-nur.netlify.app/"
     },
-    "summary": "Final-year Computer Science student with interest and experience in AI/ML research and full-stack(MERN) software development.",
-    "about": "Final-year Computer Science student with hands-on experience in AI/ML research and full-stack application development. Strong foundation in Python, PyTorch, and modern React-based frontend development. Experienced in building experimental ML pipelines, reasoning-oriented LLM workflows, and REST-style backend systems. Interested in applied AI, reasoning systems, and scalable software development across the full Machine Learning SDLC",
+    "summary": "Recent Computer Science graduate with hands-on experience building full-stack web applications using React, JavaScript, TypeScript, FastAPI, Flask, Node.js, and REST APIs.",
+    "about": "Recent Computer Science graduate with hands-on experience building full-stack web applications using React, JavaScript, TypeScript, FastAPI, Flask, Node.js, and REST APIs. Strong foundation in databases, backend development, and modular system design, with practical experience in API integration, debugging, and building maintainable applications. Comfortable working with PostgreSQL, MongoDB, MySQL, and SQLite, and eager to contribute to real-world software projects while continuously learning modern technologies.",
     "whatIDo": [
       {
-        "title": "Software Development",
-        "description": "Building full-stack applications with modern frameworks. From REST APIs to responsive frontends, I enjoy creating complete solutions that solve real problems."
+        "title": "Full-Stack Development",
+        "description": "I enjoy building complete web applications from the ground up — designing REST APIs, structuring databases, and crafting clean, responsive frontends. There's something satisfying about seeing all the layers work together."
       },
       {
-        "title": "AI/ML Research",
-        "description": "Exploring reasoning systems and language model distillation. Currently working on Tree-of-Thought approaches for making smaller models smarter."
+        "title": "AI/ML Research & Experimentation",
+        "description": "I like exploring how AI systems reason and learn. From face recognition pipelines to language model distillation, I enjoy working on problems where the solution isn't obvious yet."
       },
       {
-        "title": "Continuous Learning",
-        "description": "Always experimenting with new technologies and methodologies. From PyTorch pipelines to React patterns, I'm constantly expanding my technical toolkit."
+        "title": "Clean, Maintainable Code",
+        "description": "I care about writing code that others (and future me) can actually read. Modular design, clear separation of concerns, and good debugging habits are things I actively practice."
       }
     ]
   },
+
   "skills": {
-    "languages": ["Python", "JavaScript", "C", "C++", "HTML", "CSS"],
-    "ml": ["PyTorch", "NumPy"],
-    "backend": ["Flask", "REST API","Node/Express.js"],
-    "frontend": ["React", "Tailwind CSS"],
-    "database": ["SQLite", "MySQL", "MongoDB"],
-    "tools": ["Git", "GitHub"]
+    "languages": ["JavaScript", "Python", "C", "C++", "HTML", "CSS"],
+    "frontend": ["React", "TypeScript", "Tailwind CSS"],
+    "backend": ["Node.js", "Express.js", "Flask", "FastAPI", "REST API"],
+    "database": ["PostgreSQL", "MongoDB", "MySQL", "SQLite"],
+    "tools": ["SQLAlchemy", "Git", "GitHub", "Postman"],
+    "concepts": ["Data Structures", "Algorithms", "OOP", "DBMS", "API Integration"],
+    "ml": ["DeepFace", "MediaPipe", "TensorFlow", "PyTorch", "NumPy"]
   },
+
   "research": {
     "title": "Tree-of-Thought Distillation for Small Language Models",
     "points": [
-      "Generating reasoning traces using branching and pruning",
-      "Preparing datasets from reasoning traces",
-      "Fine-tuning and evaluation for small language models"
+      "Generated reasoning traces using structured branching and pruning techniques",
+      "Built datasets from reasoning paths and fine-tuned smaller models",
+      "Evaluated model performance for reasoning-based tasks"
     ]
   },
+
   "projects": [
     {
-      "title": "QuickHire — Job Board Platform",
-      "stack": [
-        "React",
-        "Node.js",
-        "Express",
-        "MongoDB",
-        "Tailwind CSS",
-        "DaisyUI"
-      ],
+      "title": "QuickHire — Full-Stack Job Board Platform",
+      "stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
       "points": [
-        "Full-stack job board for browsing and applying to jobs",
-        "Search and filter jobs by title, company, category, and location",
-        "Admin dashboard to manage job listings and applications",
-        "RESTful API with Express and MongoDB for backend data management"
+        "Designed and developed a scalable full-stack job platform with dynamic job browsing and application features",
+        "Built RESTful APIs using Express and MongoDB with structured data models",
+        "Implemented search and filtering with optimized query handling",
+        "Developed an admin dashboard for managing jobs and user activity",
+        "Applied modular architecture and reusable component design"
       ],
       "repo": "https://github.com/mrznur/QSL-QuickHire",
-      "image": null,
-      "live": "https://qsl-quick-hire.vercel.app/"
+      "live": "https://qsl-quick-hire.vercel.app/",
+      "image": null
+    },
+    {
+      "title": "Face Detection System — Real-Time Face Recognition Platform",
+      "stack": ["FastAPI", "PostgreSQL", "SQLAlchemy", "DeepFace", "MediaPipe", "React", "TypeScript"],
+      "points": [
+        "Built a full-stack face recognition and presence detection system with real-time verification and gesture detection",
+        "Developed backend services using FastAPI for person management, face enrollment, and verification",
+        "Designed relational database models using PostgreSQL and SQLAlchemy",
+        "Integrated DeepFace for face recognition and MediaPipe for gesture analysis",
+        "Built a React frontend for live camera detection, dashboard monitoring, and enrollment workflows"
+      ],
+      "repo": "https://github.com/mrznur/Detector-with-AI",
+      "live": null,
+      "image": null
     },
     {
       "title": "Bashpo — Online Game Marketplace",
-      "stack": ["Flask", "SQLite", "HTML", "JavaScript", "CSS", "Tailwind CSS"],
+      "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
       "points": [
-        "User authentication and role-based access",
-        "Product listing and purchase flow",
-        "SQLite database integration"
+        "Developed a backend-driven marketplace using Flask with authentication and role-based authorization",
+        "Implemented product listing, purchasing workflow, and user management",
+        "Designed and maintained a relational database schema using SQLite",
+        "Structured the application with clean separation of responsibilities"
       ],
       "repo": "https://github.com/mrznur/bashpo-mastered",
-      "image": null,
-      "live": "https://bashpo-mastered.onrender.com/"
+      "live": "https://bashpo-mastered.onrender.com/",
+      "image": null
     },
     {
       "title": "Weather Forecast Web Application",
       "stack": ["React", "Tailwind CSS", "WeatherAPI"],
       "points": [
-        "Real-time weather display",
-        "7-day forecast",
-        "Modular structure with separated components"
+        "Built a real-time weather application with API integration and dynamic UI updates",
+        "Structured the application using reusable React components and state management",
+        "Managed environment variables and applied basic API security practices"
       ],
       "repo": "https://github.com/mrznur/weather",
-      "image": null,
-      "live": "https://weatherapi-checker.netlify.app/"
-    },
-    {
-      "title": "Book Wolf",
-      "stack": ["React", "JavaScript"],
-      "points": [
-        "Basic reading/bookmarking features",
-        "React component structure",
-        "Client-side interactions"
-      ],
-      "repo": "https://github.com/mrznur/book-wolf",
+      "live": "https://weatherapi-checker.netlify.app/",
       "image": null
-    },
-    {
-      "title": "CS — Ticket System",
-      "stack": ["React", "Vite", "Tailwind CSS", "React Toastify"],
-      "points": [
-        "Customer support ticket management system",
-        "Track ticket status with In Progress and Resolved categories",
-        "Interactive UI for adding and completing tickets",
-        "Responsive design with modern gradient cards and vector graphics"
-      ],
-      "repo": "https://github.com/mrznur/customer-support",
-      "image": null,
-      "live": "https://ct-customerticket.netlify.app/"
     }
   ],
+
   "education": {
     "title": "BRAC University — BSc in Computer Science",
-    "meta": "Sep 2021 – Present • Final Semester"
+    "meta": "Sep 2021 – May 2026"
   },
+
+  "certifications": [
+    {
+      "title": "IELTS",
+      "year": "2022",
+      "detail": "Overall Band 7.0 — Reading: 7.5, Listening: 7.5, Speaking: 7.0, Writing: 6.0"
+    }
+  ],
+
+  "languages": [
+    { "name": "English", "level": "Fluent" },
+    { "name": "Bengali", "level": "Native" }
+  ],
+
   "experience": [
     {
       "title": "Transcriber & Translator — CS50 (Harvard)",
       "time": "2022",
-      "desc": "Transcription and translation of technical lecture content."
+      "desc": "Transcribed and translated technical lectures, improving attention to detail and technical understanding."
     },
     {
       "title": "Private Tutor (Math, Science, Programming, IELTS)",
       "time": "2020 – 2025",
-      "desc": "Tutoring in math, science, programming, and IELTS preparation."
+      "desc": "Taught programming fundamentals, problem-solving, and logical thinking. Strengthened communication and ability to explain complex concepts clearly."
     }
   ]
 }

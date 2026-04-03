@@ -1,6 +1,5 @@
 import Card from "./Card";
 import Tag from "./Tag";
-import ButtonLink from "./ButtonLink";
 
 export default function ProjectCard({ project }) {
   return (
@@ -14,35 +13,29 @@ export default function ProjectCard({ project }) {
         />
       ) : null}
 
-      <p className="font-semibold text-slate-900">{project.title}</p>
+      <span className="font-semibold text-[#011f4b] block">{project.title}</span>
 
       <div className="mt-2 flex flex-wrap gap-2">
-        {project.stack.map((s) => (
-          <Tag key={s}>{s}</Tag>
-        ))}
+        {project.stack.map((s) => <Tag key={s}>{s}</Tag>)}
       </div>
 
-      <ul className="mt-4 space-y-2 text-sm text-slate-600 list-disc pl-5">
-        {project.points.map((p, i) => (
-          <li key={i}>{p}</li>
-        ))}
+      <ul className="mt-4 space-y-2 text-sm text-[#03396c] list-disc pl-5">
+        {project.points.map((p, i) => <li key={i}>{p}</li>)}
       </ul>
 
-      <div className="flex justify-between">
-        {project.repo ? (
-        <div className="mt-4">
-          <ButtonLink href={project.repo} variant="secondary">
-            Repository
-          </ButtonLink>
-        </div>
-      ) : null}
-      {project.live ? (
-        <div className="mt-4">
-          <ButtonLink href={project.live} variant="secondary">
-            Live Demo
-          </ButtonLink>
-        </div>
-      ) : null}
+      <div className="mt-4 flex gap-4 flex-wrap">
+        {project.repo && (
+          <a href={project.repo} target="_blank" rel="noreferrer"
+            className="text-sm text-[#005b96] hover:text-[#03396c] font-medium transition">
+            Repository →
+          </a>
+        )}
+        {project.live && (
+          <a href={project.live} target="_blank" rel="noreferrer"
+            className="text-sm text-[#005b96] hover:text-[#03396c] font-medium transition">
+            Live Demo →
+          </a>
+        )}
       </div>
     </Card>
   );
