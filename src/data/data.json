@@ -8,8 +8,8 @@
       "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/",
       "portfolio": "https://miraz-nur.netlify.app/"
     },
-    "summary": "Recent Computer Science graduate with hands-on experience building full-stack web applications using React, JavaScript, TypeScript, FastAPI, Flask, Node.js, and REST APIs.",
-    "about": "Recent Computer Science graduate with hands-on experience building full-stack web applications using React, JavaScript, TypeScript, FastAPI, Flask, Node.js, and REST APIs. Strong foundation in databases, backend development, and modular system design, with practical experience in API integration, debugging, and building maintainable applications. Comfortable working with PostgreSQL, MongoDB, MySQL, and SQLite, and eager to contribute to real-world software projects while continuously learning modern technologies.",
+    "summary": "Final-semester Computer Science student with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs.",
+    "about": "Final-semester Computer Science student with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs. Strong foundation in frontend and backend development, database design, modular architecture, debugging, and building maintainable software systems. Comfortable working across multiple technologies and eager to contribute to real-world software projects in a collaborative engineering environment.",
     "whatIDo": [
       {
         "title": "Full-Stack Development",
@@ -17,7 +17,7 @@
       },
       {
         "title": "AI/ML Research & Experimentation",
-        "description": "I like exploring how AI systems reason and learn. From face recognition pipelines to language model distillation, I enjoy working on problems where the solution isn't obvious yet."
+        "description": "I like exploring how AI systems reason and learn. From face recognition pipelines to LLM reasoning frameworks, I enjoy working on problems where the solution isn't obvious yet."
       },
       {
         "title": "Clean, Maintainable Code",
@@ -27,21 +27,24 @@
   },
 
   "skills": {
-    "languages": ["JavaScript", "Python", "C", "C++", "HTML", "CSS"],
+    "languages": ["JavaScript", "Python", "TypeScript", "C", "C++", "HTML", "CSS"],
     "frontend": ["React", "TypeScript", "Tailwind CSS"],
     "backend": ["Node.js", "Express.js", "Flask", "FastAPI", "REST API"],
     "database": ["PostgreSQL", "MongoDB", "MySQL", "SQLite"],
-    "tools": ["SQLAlchemy", "Git", "GitHub", "Postman"],
-    "concepts": ["Data Structures", "Algorithms", "OOP", "DBMS", "API Integration"],
+    "tools": ["Git", "GitHub", "Postman", "SQLAlchemy"],
+    "concepts": ["Data Structures", "Algorithms", "OOP", "DBMS", "API Integration", "Clean Code", "Debugging", "Modular Design", "REST Architecture"],
     "ml": ["DeepFace", "MediaPipe", "TensorFlow", "PyTorch", "NumPy"]
   },
 
   "research": {
-    "title": "Tree-of-Thought Distillation for Small Language Models",
+    "title": "Tree of Thoughts with CodeAct Pattern",
     "points": [
-      "Generated reasoning traces using structured branching and pruning techniques",
-      "Built datasets from reasoning paths and fine-tuned smaller models",
-      "Evaluated model performance for reasoning-based tasks"
+      "Designed and implemented a Tree-of-Thoughts reasoning framework using the CodeAct pattern, where LLMs generate executable Python code instead of free-form text reasoning",
+      "Evaluated the system on the Game of 24 task using Gemma 3 27B and GPT-4o-mini, with Chain-of-Thought baselines for comparison",
+      "Improved puzzle-solving success rate from 60% to 80% through prompt-engineering and search-strategy refinement",
+      "Reduced average API calls per puzzle by 31.6%, improving reasoning efficiency and lowering cost",
+      "Identified and analyzed model reasoning biases and introduced a 'try both orders' prompting strategy to recover previously failing cases",
+      "Conducted structured failure analysis, reproducibility checks, and comparative evaluation across prompting, temperature, and search-selection strategies"
     ]
   },
 
@@ -50,25 +53,25 @@
       "title": "QuickHire — Full-Stack Job Board Platform",
       "stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
       "points": [
-        "Designed and developed a scalable full-stack job platform with dynamic job browsing and application features",
-        "Built RESTful APIs using Express and MongoDB with structured data models",
-        "Implemented search and filtering with optimized query handling",
-        "Developed an admin dashboard for managing jobs and user activity",
-        "Applied modular architecture and reusable component design"
+        "Designed and developed a full-stack job platform with job browsing, application workflows, and admin management features",
+        "Built RESTful backend APIs using Express.js and MongoDB with structured models and organized routing",
+        "Implemented search and filtering features with optimized query handling",
+        "Developed an admin dashboard to manage job posts and user activity",
+        "Applied modular architecture and reusable frontend component design"
       ],
       "repo": "https://github.com/mrznur/QSL-QuickHire",
       "live": "https://qsl-quick-hire.vercel.app/",
       "image": null
     },
     {
-      "title": "Face Detection System — Real-Time Face Recognition Platform",
+      "title": "Face Detection System — Real-Time Recognition & Presence Detection",
       "stack": ["FastAPI", "PostgreSQL", "SQLAlchemy", "DeepFace", "MediaPipe", "React", "TypeScript"],
       "points": [
-        "Built a full-stack face recognition and presence detection system with real-time verification and gesture detection",
-        "Developed backend services using FastAPI for person management, face enrollment, and verification",
-        "Designed relational database models using PostgreSQL and SQLAlchemy",
-        "Integrated DeepFace for face recognition and MediaPipe for gesture analysis",
-        "Built a React frontend for live camera detection, dashboard monitoring, and enrollment workflows"
+        "Built a full-stack system for face recognition, presence detection, and real-time verification workflows",
+        "Developed backend services using FastAPI for person management, enrollment, verification, and activity log handling",
+        "Designed PostgreSQL database models using SQLAlchemy for persons, face embeddings, cameras, and detection records",
+        "Structured the backend with modular API routes, schemas, models, configuration, and service layers",
+        "Built a React frontend for camera-based detection, dashboard monitoring, face enrollment, and verification flows"
       ],
       "repo": "https://github.com/mrznur/Detector-with-AI",
       "live": null,
@@ -79,9 +82,9 @@
       "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
       "points": [
         "Developed a backend-driven marketplace using Flask with authentication and role-based authorization",
-        "Implemented product listing, purchasing workflow, and user management",
+        "Implemented product listing, purchasing workflow, and user management features",
         "Designed and maintained a relational database schema using SQLite",
-        "Structured the application with clean separation of responsibilities"
+        "Structured the application with clean separation of responsibilities and maintainable backend architecture"
       ],
       "repo": "https://github.com/mrznur/bashpo-mastered",
       "live": "https://bashpo-mastered.onrender.com/",
@@ -91,8 +94,8 @@
       "title": "Weather Forecast Web Application",
       "stack": ["React", "Tailwind CSS", "WeatherAPI"],
       "points": [
-        "Built a real-time weather application with API integration and dynamic UI updates",
-        "Structured the application using reusable React components and state management",
+        "Built a real-time weather application with external API integration and dynamic UI updates",
+        "Structured the frontend using reusable React components and state management",
         "Managed environment variables and applied basic API security practices"
       ],
       "repo": "https://github.com/mrznur/weather",
@@ -103,14 +106,14 @@
 
   "education": {
     "title": "BRAC University — BSc in Computer Science",
-    "meta": "Sep 2021 – May 2026"
+    "meta": "Sep 2021 – May 2026 • Expected CGPA: 2.90–3.00 / 4.00"
   },
 
   "certifications": [
     {
       "title": "IELTS",
-      "year": "2022",
-      "detail": "Overall Band 7.0 — Reading: 7.5, Listening: 7.5, Speaking: 7.0, Writing: 6.0"
+      "year": "2023",
+      "detail": "Overall Band 7.0"
     }
   ],
 
@@ -123,12 +126,12 @@
     {
       "title": "Transcriber & Translator — CS50 (Harvard)",
       "time": "2022",
-      "desc": "Transcribed and translated technical lectures, improving attention to detail and technical understanding."
+      "desc": "Transcribed and translated technical lectures, improving attention to detail and understanding of technical content. Strengthened written communication and clarity in explaining technical concepts."
     },
     {
-      "title": "Private Tutor (Math, Science, Programming, IELTS)",
+      "title": "Private Tutor — Math, Science, Programming, IELTS",
       "time": "2020 – 2025",
-      "desc": "Taught programming fundamentals, problem-solving, and logical thinking. Strengthened communication and ability to explain complex concepts clearly."
+      "desc": "Taught programming fundamentals, problem-solving, and logical thinking to students. Strengthened communication skills and the ability to explain complex topics in a simple, structured way."
     }
   ]
 }
