@@ -78,6 +78,21 @@
       "image": null
     },
     {
+      "title": "Get Hyped — Agency Website",
+      "stack": ["React", "Vite", "Tailwind CSS", "Lenis"],
+      "points": [
+        "Fully responsive marketing website for a social-first content agency",
+        "Scroll-driven expertise card stack animation using a custom scroll progress hook",
+        "Mouse trail logo spawn effect with portal rendering to bypass overflow clipping",
+        "Custom SVG trapezium footer with separate responsive layouts for mobile, tablet, and desktop",
+        "Smooth scroll via Lenis with scroll-fade entrance animations on section headings",
+        "Animated hamburger menu, header nav with hover slide animation, and hero tilt-on-hover cards"
+      ],
+      "repo": "https://github.com/mrznur/GetHyped",
+      "live": "https://gethypedclone.netlify.app/",
+      "image": null
+    },
+    {
       "title": "Bashpo — Online Game Marketplace",
       "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
       "points": [
