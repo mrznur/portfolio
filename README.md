@@ -1,16 +1,16 @@
-# MD Mahmudun Nur Miraz — Portfolio
+# Portfolio
 
-Personal portfolio website built with React, Vite, and Tailwind CSS.
+My personal portfolio site. Built with React + Vite + Tailwind.
 
-## Stack
+Nothing fancy behind the scenes — just a single page with a modal-based nav, a splash screen that splits open on load, and all content pulled from a single `data.json` file so it's easy to update.
 
-- React 19
-- Vite
-- Tailwind CSS
-
-## Running locally
+## Running it
 
 ```bash
 npm install
 npm run dev
 ```
+
+## Stack
+
+React, Vite, Tailwind CSS, DM Sans + Fraunces fonts.

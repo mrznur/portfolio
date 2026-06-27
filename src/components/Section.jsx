@@ -1,17 +1,13 @@
-export default function Section({ id, eyebrow, title, children }) {
+export default function Section({ id, title, children }) {
   return (
-    <section id={id} className="scroll-mt-24 py-12">
-      {eyebrow ? (
-        <p className="text-xs font-semibold tracking-wider text-[#005b96] uppercase">
-          {eyebrow}
-        </p>
-      ) : null}
-      <h2 className="mt-2 text-2xl md:text-3xl font-bold tracking-tight text-[#011f4b]">
-        {title}
-      </h2>
-      <div className="mt-6">
-        {children}
+    <section id={id} className="scroll-mt-20 py-16">
+      <div className="flex items-center gap-4 mb-10">
+        <span className="text-[0.65rem] font-bold tracking-[0.25em] text-blue-500 uppercase">
+          {title}
+        </span>
+        <div className="flex-1 h-px bg-white/6" />
       </div>
+      {children}
     </section>
   );
 }

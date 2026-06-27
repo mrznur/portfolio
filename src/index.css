@@ -2,32 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@layer base {
+  html { font-size: 18px; scroll-behavior: smooth; }
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: #080c14;
+    color: #c4cdd6;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-.animate-scale-in {
-  animation: scale-in 0.2s ease-out;
+/* ── Splash ─────────────────────────────────────── */
+@keyframes slide-up-out   { to { transform: translateY(-100%); } }
+@keyframes slide-down-out { to { transform: translateY(100%);  } }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
+
+/* ── Typewriter ──────────────────────────────────── */
+@keyframes tw-in  { from { opacity: 0; transform: translateY(8px);  } to { opacity: 1; transform: translateY(0);    } }
+@keyframes tw-out { from { opacity: 1; transform: translateY(0);    } to { opacity: 0; transform: translateY(-8px); } }
+
+/* ── Modal / Menu ────────────────────────────────── */
+@keyframes modal-in { from { opacity: 0; transform: scale(0.97) translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes menu-in  { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* ── Glow pulse for hero accent ──────────────────── */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.9; }
+}
+
+.splash-top-out    { animation: slide-up-out   0.85s cubic-bezier(0.76,0,0.24,1) forwards; }
+.splash-bottom-out { animation: slide-down-out 0.85s cubic-bezier(0.76,0,0.24,1) forwards; }
+
+.anim-1 { animation: fade-up 0.65s ease-out 0.1s  both; }
+.anim-2 { animation: fade-up 0.65s ease-out 0.28s both; }
+.anim-3 { animation: fade-up 0.65s ease-out 0.46s both; }
+.anim-4 { animation: fade-up 0.65s ease-out 0.64s both; }
+
+.tw-enter { animation: tw-in  0.3s ease-out forwards; }
+.tw-exit  { animation: tw-out 0.25s ease-in  forwards; }
+
+.animate-scale-in { animation: modal-in 0.2s ease-out; }
+.animate-menu-in  { animation: menu-in  0.16s ease-out; }
+
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e2a3a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2d3f52; }

@@ -8,8 +8,8 @@
       "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/",
       "portfolio": "https://miraz-nur.netlify.app/"
     },
-    "summary": "Final-semester Computer Science student with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs.",
-    "about": "Final-semester Computer Science student with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs. Strong foundation in frontend and backend development, database design, modular architecture, debugging, and building maintainable software systems. Comfortable working across multiple technologies and eager to contribute to real-world software projects in a collaborative engineering environment.",
+    "summary": "Computer Science graduate with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs.",
+    "about": "Computer Science graduate with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs. Strong foundation in frontend and backend development, database design, modular architecture, debugging, and building maintainable software systems. Comfortable working across multiple technologies and eager to contribute to real-world software projects in a collaborative engineering environment.",
     "whatIDo": [
       {
         "title": "Full-Stack Development",
@@ -38,13 +38,16 @@
 
   "research": {
     "title": "Tree of Thoughts with CodeAct Pattern",
+    "stack": ["Python", "DeepSeek API", "Gemma 4 31B", "Qwen", "PyTorch", "Transformers"],
     "points": [
-      "Designed and implemented a Tree-of-Thoughts reasoning framework using the CodeAct pattern, where LLMs generate executable Python code instead of free-form text reasoning",
-      "Evaluated the system on the Game of 24 task using Gemma 3 27B and GPT-4o-mini, with Chain-of-Thought baselines for comparison",
-      "Improved puzzle-solving success rate from 60% to 80% through prompt-engineering and search-strategy refinement",
-      "Reduced average API calls per puzzle by 31.6%, improving reasoning efficiency and lowering cost",
-      "Identified and analyzed model reasoning biases and introduced a 'try both orders' prompting strategy to recover previously failing cases",
-      "Conducted structured failure analysis, reproducibility checks, and comparative evaluation across prompting, temperature, and search-selection strategies"
+      "Designed and implemented a Tree-of-Thoughts reasoning framework using the CodeAct pattern, where LLMs generate and execute Python code at each search step instead of free-form text, enabling verifiable reasoning with sandbox execution",
+      "Evaluated the system on the Game of 24 task using DeepSeek (teacher) and Gemma 4 31B, achieving 89% puzzle-solving accuracy on a held-out test set of 100 puzzles with an average of 45 API calls per puzzle",
+      "Built a Dead-End Memory module that accumulates structural failure patterns across the search, skipping 30–80% of explored states and reducing redundant API calls per puzzle",
+      "Implemented a hybrid two-level pruning system combining static heuristics with dynamic pattern injection into LLM proposals at depth ≥ 2, improving proposal quality as search progresses",
+      "Conducted a teacher-student knowledge distillation pipeline: generated 900 annotated reasoning traces with the teacher model, converted them into backtracking training examples, and fine-tuned SmolLM-360M to replicate the teacher's search behavior in a single forward pass — no API calls at inference",
+      "Designed a backtracking augmentation strategy (v2) with variable dead-end depths and multi-level backtrack targets; fine-tuned student model achieved 100% arithmetic accuracy per step and learned structured search behavior",
+      "Identified a model-specific format compliance gap in smaller instruction-tuned models (Gemma 4 31B, 0% one-word compliance vs GPT-4's reliable zero-shot format following) and implemented a robust last-line extraction workaround that recovered 100% label accuracy from verbose responses",
+      "Conducted structured failure analysis including beam selection anomalies, extraction logic inconsistencies, and ground truth label errors in the evaluation suite, with documented root causes and proposed fixes"
     ]
   },
 
@@ -121,7 +124,7 @@
 
   "education": {
     "title": "BRAC University — BSc in Computer Science",
-    "meta": "Sep 2021 – May 2026"
+    "meta": "Sep 2021 – May 2026 • Graduated"
   },
 
   "certifications": [

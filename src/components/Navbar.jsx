@@ -1,77 +1,74 @@
 import { useState } from "react";
 
 const items = [
-  { label: "About", id: "about" },
-  { label: "What I Do", id: "what-i-do" },
-  { label: "Projects", id: "projects" },
-  { label: "Research", id: "research" },
-  { label: "Education", id: "education" },
+  { label: "About",      id: "about"      },
+  { label: "What I Do",  id: "what-i-do"  },
+  { label: "Projects",   id: "projects"   },
+  { label: "Research",   id: "research"   },
+  { label: "Education",  id: "education"  },
   { label: "Experience", id: "experience" },
-  { label: "Contact", id: "contact" }
+  { label: "Contact",    id: "contact"    },
 ];
 
-export default function Navbar({ onNavClick }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleNavClick = (id) => {
-    onNavClick(id);
-    setMobileMenuOpen(false);
-  };
+export default function Navbar({ onNavClick, activeModal }) {
+  const [open, setOpen] = useState(false);
+  const handle = (id) => { onNavClick(id); setOpen(false); };
 
   return (
-    <div className="sticky top-0 z-50 border-b border-[#6497b1]/30 bg-[#f5f3f0] backdrop-blur shadow-sm">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex items-center justify-between py-4">
-          <a href="#top" className="font-bold text-lg text-[#011f4b]">Miraz</a>
-          
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-sm text-[#03396c]">
-            {items.map((it) => (
-              <button
-                key={it.id}
-                onClick={() => onNavClick(it.id)}
-                className="hover:text-[#005b96] transition font-medium"
-              >
-                {it.label}
-              </button>
-            ))}
-          </nav>
+    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#080c14]/95 backdrop-blur-md">
+      <div className="mx-auto max-w-5xl px-6 flex items-center justify-between h-[3.75rem]">
+        <a
+          href="#top"
+          className="text-white font-bold text-[1.15rem] tracking-tight hover:opacity-80 transition"
+          style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+        >
+          Miraz
+        </a>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-[#011f4b] p-2"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
+        {/* Desktop */}
+        <nav className="hidden md:flex items-center gap-7">
+          {items.map((it) => (
+            <button
+              key={it.id}
+              onClick={() => onNavClick(it.id)}
+              className={`text-[0.85rem] font-medium transition-colors duration-150 ${
+                activeModal === it.id
+                  ? "text-blue-400"
+                  : "text-slate-400 hover:text-slate-100"
+              }`}
+            >
+              {it.label}
+            </button>
+          ))}
+        </nav>
 
-        {/* Mobile Dropdown Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden pb-4 animate-scale-in">
-            <nav className="flex flex-col gap-3">
-              {items.map((it) => (
-                <button
-                  key={it.id}
-                  onClick={() => handleNavClick(it.id)}
-                  className="text-left px-4 py-2 text-[#03396c] hover:bg-[#b3cde0]/30 rounded-lg transition font-medium"
-                >
-                  {it.label}
-                </button>
-              ))}
-            </nav>
-          </div>
-        )}
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition"
+          aria-label="Toggle menu"
+        >
+          {open
+            ? <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            : <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          }
+        </button>
       </div>
-    </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden border-t border-white/5 bg-[#080c14] px-6 py-3 animate-menu-in">
+          {items.map((it) => (
+            <button
+              key={it.id}
+              onClick={() => handle(it.id)}
+              className="w-full text-left py-3 text-[0.9rem] font-medium text-slate-400 hover:text-white border-b border-white/4 last:border-0 transition-colors"
+            >
+              {it.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </header>
   );
 }
