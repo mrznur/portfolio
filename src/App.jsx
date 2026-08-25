@@ -187,7 +187,7 @@ export default function App() {
 
       <div
         id="top"
-        className={`min-h-screen bg-[#080c14] transition-opacity duration-700 ${
+        className={`min-h-screen transition-opacity duration-700 ${
           splashDone ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -199,8 +199,10 @@ export default function App() {
 
         {/* ── Hero ──────────────────────────────────────── */}
         <header id="about" className="relative pt-28 md:pt-40 pb-24 px-6 overflow-hidden">
-          {/* Ambient glow */}
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-blue-600/[0.07] blur-[80px] pointer-events-none" />
+          {/* Grid background */}
+          <div className="fixed inset-0 -z-10 bg-[#080c14]">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#47556930_1px,transparent_1px),linear-gradient(to_bottom,#47556930_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_90%_70%_at_50%_40%,#000_70%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_90%_70%_at_50%_40%,#000_70%,transparent_100%)] [mask-repeat:no-repeat] [-webkit-mask-repeat:no-repeat]" />
+          </div>
 
           <div className="relative mx-auto max-w-5xl">
             <p className="text-[0.65rem] font-bold tracking-[0.3em] text-blue-500 uppercase mb-5">
@@ -218,7 +220,7 @@ export default function App() {
               <Typewriter />
             </div>
 
-            <p className="mt-4 text-[0.97rem] text-slate-500 max-w-xl leading-[1.9]">
+            <p className="mt-4 text-[0.97rem] text-slate-400 max-w-xl leading-[1.9]">
               {person.summary}
             </p>
 
@@ -246,6 +248,13 @@ export default function App() {
             </div>
           </Section>
 
+          {/* Projects */}
+          <Section id="projects" title="Projects">
+            <div className="grid md:grid-cols-2 gap-4">
+              {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
+            </div>
+          </Section>
+
           {/* Research */}
           <Section id="research" title="Research / Thesis">
             <Card>
@@ -259,13 +268,6 @@ export default function App() {
                 {research.points.map((p, i) => <li key={i}>{p}</li>)}
               </ul>
             </Card>
-          </Section>
-
-          {/* Projects */}
-          <Section id="projects" title="Projects">
-            <div className="grid md:grid-cols-2 gap-4">
-              {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
-            </div>
           </Section>
 
           {/* Education */}
@@ -309,12 +311,29 @@ export default function App() {
 
           {/* Contact */}
           <Section id="contact" title="Contact">
-            <Card className="max-w-xs">
-              <p className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-widest mb-3">Email</p>
-              <a href={`mailto:${person.email}`} className="text-[0.92rem] text-blue-400 hover:text-blue-300 transition-colors">
-                {person.email}
-              </a>
-            </Card>
+            <div className="grid sm:grid-cols-2 gap-4 max-w-lg">
+              <Card>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Email</p>
+                <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors break-all">
+                  {person.email}
+                </a>
+              </Card>
+              <Card>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Links</p>
+                <div className="space-y-2.5">
+                  {[
+                    { name: "GitHub",    href: person.links.github    },
+                    { name: "LinkedIn",  href: person.links.linkedin  },
+                    { name: "Portfolio", href: person.links.portfolio },
+                  ].map((l) => (
+                    <a key={l.name} href={l.href} target="_blank" rel="noreferrer"
+                      className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors">
+                      {l.name} <ExtIcon />
+                    </a>
+                  ))}
+                </div>
+              </Card>
+            </div>
           </Section>
 
           <footer className="pb-16 pt-2 text-[0.82rem] text-slate-700">

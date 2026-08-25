@@ -8,20 +8,20 @@
       "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/",
       "portfolio": "https://miraz-nur.netlify.app/"
     },
-    "summary": "Computer Science graduate with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs.",
-    "about": "Computer Science graduate with hands-on experience building full-stack web applications using React, TypeScript, Node.js, FastAPI, Flask, and REST APIs. Strong foundation in frontend and backend development, database design, modular architecture, debugging, and building maintainable software systems. Comfortable working across multiple technologies and eager to contribute to real-world software projects in a collaborative engineering environment.",
+    "summary": "CS graduate who builds full-stack apps and researches LLM reasoning systems. I work across the stack — React frontends, REST APIs, SQL/NoSQL databases, and ML pipelines.",
+    "about": "CS graduate with experience across full-stack web development and AI/ML research. I've built production-ready apps using React, TypeScript, Node.js, FastAPI, and Flask, and worked on LLM reasoning systems for my thesis. I care about clean architecture, readable code, and shipping things that actually work.",
     "whatIDo": [
       {
         "title": "Full-Stack Development",
-        "description": "I enjoy building complete web applications from the ground up — designing REST APIs, structuring databases, and crafting clean, responsive frontends. There's something satisfying about seeing all the layers work together."
+        "description": "I build complete web apps — REST APIs with Node.js or FastAPI, databases with PostgreSQL or MongoDB, and React frontends. I've shipped job platforms, marketplaces, and real-time detection systems."
       },
       {
-        "title": "AI/ML Research & Experimentation",
-        "description": "I like exploring how AI systems reason and learn. From face recognition pipelines to LLM reasoning frameworks, I enjoy working on problems where the solution isn't obvious yet."
+        "title": "AI/ML Research",
+        "description": "My thesis work involves LLM reasoning — specifically Tree-of-Thoughts with executable code steps, knowledge distillation, and evaluating smaller models on structured tasks."
       },
       {
-        "title": "Clean, Maintainable Code",
-        "description": "I care about writing code that others (and future me) can actually read. Modular design, clear separation of concerns, and good debugging habits are things I actively practice."
+        "title": "Frontend Engineering",
+        "description": "Beyond functional UI, I build interactive experiences — scroll-driven animations, custom carousels, responsive layouts, and performance-aware component design using React and Tailwind."
       }
     ]
   },
@@ -37,84 +37,96 @@
   },
 
   "research": {
-    "title": "Tree of Thoughts with CodeAct Pattern",
+    "title": "Tree of Thoughts with CodeAct Pattern — Thesis",
     "stack": ["Python", "DeepSeek API", "Gemma 4 31B", "Qwen", "PyTorch", "Transformers"],
     "points": [
-      "Designed and implemented a Tree-of-Thoughts reasoning framework using the CodeAct pattern, where LLMs generate and execute Python code at each search step instead of free-form text, enabling verifiable reasoning with sandbox execution",
-      "Evaluated the system on the Game of 24 task using DeepSeek (teacher) and Gemma 4 31B, achieving 89% puzzle-solving accuracy on a held-out test set of 100 puzzles with an average of 45 API calls per puzzle",
-      "Built a Dead-End Memory module that accumulates structural failure patterns across the search, skipping 30–80% of explored states and reducing redundant API calls per puzzle",
-      "Implemented a hybrid two-level pruning system combining static heuristics with dynamic pattern injection into LLM proposals at depth ≥ 2, improving proposal quality as search progresses",
-      "Conducted a teacher-student knowledge distillation pipeline: generated 900 annotated reasoning traces with the teacher model, converted them into backtracking training examples, and fine-tuned SmolLM-360M to replicate the teacher's search behavior in a single forward pass — no API calls at inference",
-      "Designed a backtracking augmentation strategy (v2) with variable dead-end depths and multi-level backtrack targets; fine-tuned student model achieved 100% arithmetic accuracy per step and learned structured search behavior",
-      "Identified a model-specific format compliance gap in smaller instruction-tuned models (Gemma 4 31B, 0% one-word compliance vs GPT-4's reliable zero-shot format following) and implemented a robust last-line extraction workaround that recovered 100% label accuracy from verbose responses",
-      "Conducted structured failure analysis including beam selection anomalies, extraction logic inconsistencies, and ground truth label errors in the evaluation suite, with documented root causes and proposed fixes"
+      "Built a Tree-of-Thoughts framework where LLMs generate and execute Python code at each search step instead of free-form text — making reasoning verifiable via sandbox execution",
+      "Achieved 89% accuracy on the Game of 24 task (100-puzzle test set) using DeepSeek as teacher and Gemma 4 31B, averaging 45 API calls per puzzle",
+      "Built a Dead-End Memory module that skips 30–80% of explored states by accumulating failure patterns across the search tree",
+      "Implemented two-level pruning: static heuristics at depth 1, dynamic failure-pattern injection into LLM proposals at depth ≥ 2",
+      "Ran a full distillation pipeline: generated 900 annotated reasoning traces, converted them to backtracking examples, and fine-tuned SmolLM-360M — zero API calls at inference",
+      "Student model (v2) achieved 100% arithmetic accuracy per step after backtracking augmentation with variable dead-end depths and multi-level targets",
+      "Fixed a format compliance gap in Gemma 4 31B (0% one-word compliance) via last-line extraction — recovered 100% label accuracy without changing the model",
+      "Documented failure modes: beam selection bugs, extraction inconsistencies, and ground truth labelling errors in the eval suite"
     ]
   },
 
   "projects": [
     {
-      "title": "QuickHire — Full-Stack Job Board Platform",
-      "stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-      "points": [
-        "Designed and developed a full-stack job platform with job browsing, application workflows, and admin management features",
-        "Built RESTful backend APIs using Express.js and MongoDB with structured models and organized routing",
-        "Implemented search and filtering features with optimized query handling",
-        "Developed an admin dashboard to manage job posts and user activity",
-        "Applied modular architecture and reusable frontend component design"
-      ],
-      "repo": "https://github.com/mrznur/QSL-QuickHire",
-      "live": "https://qsl-quick-hire.vercel.app/",
-      "image": null
-    },
-    {
       "title": "Face Detection System — Real-Time Recognition & Presence Detection",
       "stack": ["FastAPI", "PostgreSQL", "SQLAlchemy", "DeepFace", "MediaPipe", "React", "TypeScript"],
       "points": [
-        "Built a full-stack system for face recognition, presence detection, and real-time verification workflows",
-        "Developed backend services using FastAPI for person management, enrollment, verification, and activity log handling",
-        "Designed PostgreSQL database models using SQLAlchemy for persons, face embeddings, cameras, and detection records",
-        "Structured the backend with modular API routes, schemas, models, configuration, and service layers",
-        "Built a React frontend for camera-based detection, dashboard monitoring, face enrollment, and verification flows"
+        "Full-stack face recognition and presence detection system with real-time verification",
+        "FastAPI backend handling person enrollment, face verification, and activity logging",
+        "PostgreSQL schema via SQLAlchemy covering persons, face embeddings, cameras, and detection records",
+        "Integrated DeepFace for recognition and MediaPipe for gesture/blink detection",
+        "React + TypeScript frontend for live camera feed, enrollment UI, and detection dashboard"
       ],
       "repo": "https://github.com/mrznur/Detector-with-AI",
       "live": null,
       "image": null
     },
     {
-      "title": "Get Hyped — Agency Website",
+      "title": "QuickHire — Full-Stack Job Board",
+      "stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+      "points": [
+        "Job platform with browsing, application flow, and admin management",
+        "Express + MongoDB REST API with structured models and role-based routing",
+        "Search and filter with optimized query handling",
+        "Admin dashboard for job and user management",
+        "Modular component architecture on the frontend"
+      ],
+      "repo": "https://github.com/mrznur/QSL-QuickHire",
+      "live": "https://qsl-quick-hire.vercel.app/",
+      "image": null
+    },
+    {
+      "title": "TUFFCORE Fitness — Client Landing Page",
+      "stack": ["React", "Vite", "Tailwind CSS v4", "JavaScript"],
+      "points": [
+        "Multi-section landing page for a women-only fitness studio in Oxford",
+        "Custom Tailwind v4 theme with Gotham font via @font-face across 7 weights",
+        "Horizontal programme carousel with scroll navigation and active dot indicators",
+        "YouTube embed with custom overlay — swaps to iframe on play, suppresses branding",
+        "Reviews slider with responsive card count (1/2/3 by breakpoint) and read-more toggle"
+      ],
+      "repo": "https://github.com/mrznur/FPL-Task-Repo",
+      "live": "https://tuffcore.vercel.app/",
+      "image": null
+    },
+    {
+      "title": "Get Hyped — Agency Website Clone",
       "stack": ["React", "Vite", "Tailwind CSS", "Lenis"],
       "points": [
-        "Fully responsive marketing website for a social-first content agency",
-        "Scroll-driven expertise card stack animation using a custom scroll progress hook",
-        "Mouse trail logo spawn effect with portal rendering to bypass overflow clipping",
-        "Custom SVG trapezium footer with separate responsive layouts for mobile, tablet, and desktop",
-        "Smooth scroll via Lenis with scroll-fade entrance animations on section headings",
-        "Animated hamburger menu, header nav with hover slide animation, and hero tilt-on-hover cards"
+        "Marketing site clone with scroll-driven card stack animation via custom scroll hook",
+        "Mouse trail effect spawning logo elements using React portals",
+        "SVG trapezium footer with three distinct responsive layouts",
+        "Smooth scroll via Lenis, entrance animations on section headings",
+        "Animated hamburger, hover-slide nav links, tilt-on-hover hero cards"
       ],
       "repo": "https://github.com/mrznur/GetHyped",
       "live": "https://gethypedclone.netlify.app/",
       "image": null
     },
     {
-      "title": "Bashpo — Online Game Marketplace",
+      "title": "Bashpo — Game Marketplace",
       "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
       "points": [
-        "Developed a backend-driven marketplace using Flask with authentication and role-based authorization",
-        "Implemented product listing, purchasing workflow, and user management features",
-        "Designed and maintained a relational database schema using SQLite",
-        "Structured the application with clean separation of responsibilities and maintainable backend architecture"
+        "Backend-driven marketplace with auth and role-based access",
+        "Product listing, cart, and purchase workflow",
+        "SQLite schema with clean separation between data, routing, and business logic"
       ],
       "repo": "https://github.com/mrznur/bashpo-mastered",
       "live": "https://bashpo-mastered.onrender.com/",
       "image": null
     },
     {
-      "title": "Weather Forecast Web Application",
+      "title": "Weather Forecast App",
       "stack": ["React", "Tailwind CSS", "WeatherAPI"],
       "points": [
-        "Built a real-time weather application with external API integration and dynamic UI updates",
-        "Structured the frontend using reusable React components and state management",
-        "Managed environment variables and applied basic API security practices"
+        "Real-time weather via WeatherAPI with 7-day forecast",
+        "Reusable React component structure with state-driven UI updates",
+        "Environment variable handling for API key security"
       ],
       "repo": "https://github.com/mrznur/weather",
       "live": "https://weatherapi-checker.netlify.app/",
@@ -131,7 +143,7 @@
     {
       "title": "IELTS",
       "year": "2023",
-      "detail": "Overall Band 7.0"
+      "detail": "Band 7.0 — R: 7.5, L: 7.5, S: 7.0, W: 6.0"
     }
   ],
 
@@ -144,12 +156,12 @@
     {
       "title": "Transcriber & Translator — CS50 (Harvard)",
       "time": "2022",
-      "desc": "Transcribed and translated technical lectures, improving attention to detail and understanding of technical content. Strengthened written communication and clarity in explaining technical concepts."
+      "desc": "Transcribed and translated CS50 lectures into Bengali. Sharpened technical writing and the ability to explain CS concepts clearly to non-English audiences."
     },
     {
       "title": "Private Tutor — Math, Science, Programming, IELTS",
       "time": "2020 – 2025",
-      "desc": "Taught programming fundamentals, problem-solving, and logical thinking to students. Strengthened communication skills and the ability to explain complex topics in a simple, structured way."
+      "desc": "Tutored students in programming fundamentals, algorithms, and IELTS prep. Improved at breaking down complex topics into structured, digestible explanations."
     }
   ]
 }
