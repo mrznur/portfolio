@@ -205,7 +205,13 @@ export default function App() {
           </div>
 
           <div className="relative mx-auto max-w-5xl">
-            <p className="text-[0.65rem] font-bold tracking-[0.3em] text-blue-500 uppercase mb-5">
+            {/* Open to work badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/8 mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-semibold text-emerald-400 tracking-wide">Open to work — available now</span>
+            </div>
+
+            <p className="text-[0.65rem] font-bold tracking-[0.3em] text-blue-500 uppercase mb-4">
               {person.location}
             </p>
 
@@ -224,7 +230,23 @@ export default function App() {
               {person.summary}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            {/* Quick stats row */}
+            <div className="mt-8 flex flex-wrap gap-6 text-sm text-slate-400 border-t border-white/6 pt-6">
+              <div>
+                <span className="text-white font-semibold text-lg">10+</span>
+                <span className="ml-1.5">Projects shipped</span>
+              </div>
+              <div>
+                <span className="text-white font-semibold text-lg">89%</span>
+                <span className="ml-1.5">Thesis accuracy</span>
+              </div>
+              <div>
+                <span className="text-white font-semibold text-lg">4+</span>
+                <span className="ml-1.5">Years coding</span>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
               <ButtonLink href={person.links.github}>GitHub</ButtonLink>
               <ButtonLink href={person.links.linkedin}>LinkedIn</ButtonLink>
               <ButtonLink href={`mailto:${person.email}`}>Email</ButtonLink>
@@ -234,15 +256,16 @@ export default function App() {
 
         <main className="mx-auto max-w-5xl px-6">
 
-          {/* Skills */}
-          <Section id="what-i-do" title="Skills">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              {skillGroups.map(({ label, items }) => (
-                <Card key={label}>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3.5">{label}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {items.map((x) => <Tag key={x}>{x}</Tag>)}
+          {/* What I Do */}
+          <Section id="what-i-do" title="What I Do">
+            <div className="grid md:grid-cols-3 gap-4">
+              {person.whatIDo.map((item, i) => (
+                <Card key={i}>
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
+                    <span className="text-blue-400 text-xs font-bold">{i + 1}</span>
                   </div>
+                  <p className="font-semibold text-white text-[0.95rem] mb-2" style={{ fontFamily: DF }}>{item.title}</p>
+                  <p className="text-slate-400 text-[0.88rem] leading-relaxed">{item.description}</p>
                 </Card>
               ))}
             </div>
@@ -252,6 +275,20 @@ export default function App() {
           <Section id="projects" title="Projects">
             <div className="grid md:grid-cols-2 gap-4">
               {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
+            </div>
+          </Section>
+
+          {/* Skills */}
+          <Section id="skills" title="Skills">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {skillGroups.map(({ label, items }) => (
+                <Card key={label}>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3.5">{label}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {items.map((x) => <Tag key={x}>{x}</Tag>)}
+                  </div>
+                </Card>
+              ))}
             </div>
           </Section>
 
@@ -311,27 +348,63 @@ export default function App() {
 
           {/* Contact */}
           <Section id="contact" title="Contact">
-            <div className="grid sm:grid-cols-2 gap-4 max-w-lg">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Left — info */}
+              <div className="space-y-4">
+                <Card>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Email</p>
+                  <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors break-all">
+                    {person.email}
+                  </a>
+                </Card>
+                <Card>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Links</p>
+                  <div className="space-y-2.5">
+                    {[
+                      { name: "GitHub",    href: person.links.github    },
+                      { name: "LinkedIn",  href: person.links.linkedin  },
+                      { name: "Portfolio", href: person.links.portfolio },
+                    ].map((l) => (
+                      <a key={l.name} href={l.href} target="_blank" rel="noreferrer"
+                        className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors">
+                        {l.name} <ExtIcon />
+                      </a>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+
+              {/* Right — message form */}
               <Card>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Email</p>
-                <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors break-all">
-                  {person.email}
-                </a>
-              </Card>
-              <Card>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Links</p>
-                <div className="space-y-2.5">
-                  {[
-                    { name: "GitHub",    href: person.links.github    },
-                    { name: "LinkedIn",  href: person.links.linkedin  },
-                    { name: "Portfolio", href: person.links.portfolio },
-                  ].map((l) => (
-                    <a key={l.name} href={l.href} target="_blank" rel="noreferrer"
-                      className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors">
-                      {l.name} <ExtIcon />
-                    </a>
-                  ))}
-                </div>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Send a message</p>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    window.location.href = `mailto:${person.email}?subject=${encodeURIComponent(e.target.subject.value)}&body=${encodeURIComponent(e.target.message.value)}`;
+                  }}
+                  className="space-y-3"
+                >
+                  <input
+                    name="subject"
+                    type="text"
+                    placeholder="Subject"
+                    required
+                    className="w-full rounded-lg bg-[#161920]/80 border border-slate-700/50 px-4 py-2.5 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:border-slate-500 transition-all"
+                  />
+                  <textarea
+                    name="message"
+                    rows={4}
+                    placeholder="Your message..."
+                    required
+                    className="w-full rounded-lg bg-[#161920]/80 border border-slate-700/50 px-4 py-2.5 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:border-slate-500 transition-all resize-none"
+                  />
+                  <button
+                    type="submit"
+                    className="w-full rounded-lg px-4 py-2.5 text-sm font-semibold bg-blue-500 border border-slate-700/50 hover:border-slate-500 hover:bg-[#1a1d24]/80 text-white transition-all"
+                  >
+                    Send via Email
+                  </button>
+                </form>
               </Card>
             </div>
           </Section>

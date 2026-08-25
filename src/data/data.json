@@ -13,15 +13,15 @@
     "whatIDo": [
       {
         "title": "Full-Stack Development",
-        "description": "I build complete web apps — REST APIs with Node.js or FastAPI, databases with PostgreSQL or MongoDB, and React frontends. I've shipped job platforms, marketplaces, and real-time detection systems."
+        "description": "React + TypeScript on the frontend, Node.js / FastAPI on the backend, SQL/NoSQL databases. I've shipped job platforms, marketplaces, and real-time detection systems end to end."
       },
       {
         "title": "AI/ML Research",
-        "description": "My thesis work involves LLM reasoning — specifically Tree-of-Thoughts with executable code steps, knowledge distillation, and evaluating smaller models on structured tasks."
+        "description": "Python, PyTorch, and Transformers for LLM reasoning work. My thesis uses Tree-of-Thoughts with executable code steps, knowledge distillation, and structured evaluation pipelines."
       },
       {
         "title": "Frontend Engineering",
-        "description": "Beyond functional UI, I build interactive experiences — scroll-driven animations, custom carousels, responsive layouts, and performance-aware component design using React and Tailwind."
+        "description": "React, Tailwind CSS, and Vite for performance-aware UI. I build scroll-driven animations, custom carousels, and responsive layouts — from landing pages to full product frontends."
       }
     ]
   },
