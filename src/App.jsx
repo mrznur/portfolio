@@ -257,7 +257,7 @@ export default function App() {
         <main className="mx-auto max-w-5xl px-6">
 
           {/* What I Do */}
-          <Section id="what-i-do" title="What I Do">
+          <Section id="what-i-do" title="What I Do" variant="jsx">
             <div className="grid md:grid-cols-3 gap-4">
               {person.whatIDo.map((item, i) => (
                 <Card key={i}>
@@ -272,14 +272,14 @@ export default function App() {
           </Section>
 
           {/* Projects */}
-          <Section id="projects" title="Projects">
+          <Section id="projects" title="Projects" variant="jsx">
             <div className="grid md:grid-cols-2 gap-4">
               {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
             </div>
           </Section>
 
           {/* Skills */}
-          <Section id="skills" title="Skills">
+          <Section id="skills" title="Skills" variant="obj">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {skillGroups.map(({ label, items }) => (
                 <Card key={label}>
@@ -293,7 +293,7 @@ export default function App() {
           </Section>
 
           {/* Research */}
-          <Section id="research" title="Research / Thesis">
+          <Section id="research" title="Research" variant="comment">
             <Card>
               <p className="font-semibold text-white text-[1rem]" style={{ fontFamily: DF }}>
                 {research.title}
@@ -308,7 +308,7 @@ export default function App() {
           </Section>
 
           {/* Education */}
-          <Section id="education" title="Education">
+          <Section id="education" title="Education" variant="obj">
             <div className="grid md:grid-cols-2 gap-4">
               <Card>
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">University</p>
@@ -334,7 +334,7 @@ export default function App() {
           </Section>
 
           {/* Experience */}
-          <Section id="experience" title="Experience">
+          <Section id="experience" title="Experience" variant="jsx">
             <div className="grid md:grid-cols-2 gap-4">
               {experience.map((e) => (
                 <Card key={e.title}>
@@ -347,7 +347,7 @@ export default function App() {
           </Section>
 
           {/* Contact */}
-          <Section id="contact" title="Contact">
+          <Section id="contact" title="Contact" variant="jsx">
             <div className="grid md:grid-cols-2 gap-6">
               {/* Left — info */}
               <div className="space-y-4">
