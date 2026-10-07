@@ -28,11 +28,15 @@
 
   "skills": {
     "languages": ["JavaScript", "Python", "TypeScript", "C", "C++", "HTML", "CSS"],
-    "frontend": ["React", "TypeScript", "Tailwind CSS"],
-    "backend": ["Node.js", "Express.js", "Flask", "FastAPI", "REST API"],
+    "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    "backend": ["Node.js", "Express.js", "Flask", "FastAPI", "Django", "REST API"],
     "database": ["PostgreSQL", "MongoDB", "MySQL", "SQLite"],
-    "tools": ["Git", "GitHub", "Postman", "SQLAlchemy"],
-    "concepts": ["Data Structures", "Algorithms", "OOP", "DBMS", "API Integration", "Clean Code", "Debugging", "Modular Design", "REST Architecture"],
+    "tools": ["Git", "GitHub", "Postman", "SQLAlchemy", "Shopify", "Squarespace"],
+    "concepts": [
+      "Data Structures", "Algorithms", "OOP", "DBMS",
+      "API Integration", "Clean Code", "Debugging",
+      "Modular Design", "REST Architecture"
+    ],
     "ml": ["DeepFace", "MediaPipe", "TensorFlow", "PyTorch", "NumPy"]
   },
 
@@ -53,6 +57,22 @@
 
   "projects": [
     {
+      "title": "Research Hub — AI-Powered Research Assistant",
+      "stack": ["React", "Vite", "FastAPI", "Python", "Groq API", "Tavily API", "SQLite"],
+      "points": [
+        "Full-stack AI research tool that autonomously searches, reasons, and files findings into a structured knowledge library",
+        "FastAPI backend with a multi-tool LLM agent loop — file, search, save progress, and review tools wired to Groq-hosted models",
+        "Tavily-powered live web search integrated into the reasoning pipeline for up-to-date sourcing",
+        "Auto-filing system with confidence scoring: findings above 0.7 are filed automatically, lower-confidence ones queue for user review",
+        "Dead-End Memory pattern applied to session state — resumes exactly from where it stopped with full context preserved",
+        "React frontend with Dashboard, Library (folder tree + Markdown viewer), Research session cards, Review queue, and Activity log",
+        "Deployed on Railway with Nixpacks build config and Procfile process management"
+      ],
+      "repo": "https://github.com/mrznur/research-hub",
+      "live": "https://web-production-22be3.up.railway.app/",
+      "image": null
+    },
+    {
       "title": "Face Detection System — Real-Time Recognition & Presence Detection",
       "stack": ["FastAPI", "PostgreSQL", "SQLAlchemy", "DeepFace", "MediaPipe", "React", "TypeScript"],
       "points": [
@@ -64,6 +84,23 @@
       ],
       "repo": "https://github.com/mrznur/Detector-with-AI",
       "live": null,
+      "image": null
+    },
+    {
+      "title": "404 Project Not Found — Task Manager & Image Annotator",
+      "stack": ["Next.js", "TypeScript", "Django", "DRF", "SQLite", "Tailwind CSS v4", "JWT", "React Context", "@dnd-kit"],
+      "points": [
+        "Full-stack SaaS-style productivity app with two modules: a Kanban task manager and a polygon image annotation tool",
+        "Django REST Framework backend with JWT auth — login, protected routes, per-user data isolation across all endpoints",
+        "Task module: Kanban board with drag-and-drop columns (To Do / In Progress / Done) using @dnd-kit, date-filtered task views, priority badges, and real-time status PATCH updates",
+        "Annotation module: SVG-overlay polygon drawing on uploaded images — percentage-based coordinates for resolution independence, label modal, per-annotation color coding",
+        "Images stored as Base64 in SQLite to work on Vercel's ephemeral serverless filesystem — no external storage service needed",
+        "Config-driven UI architecture: columns, priorities, tools, and nav all rendered from TypeScript config files — zero hardcoded JSX duplication",
+        "8 reusable UI components (Button, Input, Card, Badge, Modal, EmptyState, LoadingState, PageHeader) used consistently across all pages",
+        "Deployed on Vercel (frontend) with Django backend via Vercel serverless — axios interceptors handle JWT attachment and 401 redirects automatically"
+      ],
+      "repo": "https://github.com/mrznur/404--project-frontend",
+      "live": "https://404-project-frontend-kappa.vercel.app",
       "image": null
     },
     {
@@ -112,9 +149,12 @@
       "title": "Bashpo — Game Marketplace",
       "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
       "points": [
-        "Backend-driven marketplace with auth and role-based access",
-        "Product listing, cart, and purchase workflow",
-        "SQLite schema with clean separation between data, routing, and business logic"
+        "Full-stack gaming marketplace with user auth, product listings, cart, and purchase flow",
+        "Flask backend with session-based authentication and role-based access control for buyers and admins",
+        "SQLite schema with clean separation between data models, routing, and business logic",
+        "Product browsing with category filtering, individual product pages, and cart state management",
+        "Admin dashboard for managing product listings, inventory, and user orders",
+        "Deployed on Render with persistent SQLite storage"
       ],
       "repo": "https://github.com/mrznur/bashpo-mastered",
       "live": "https://bashpo-mastered.onrender.com/",
