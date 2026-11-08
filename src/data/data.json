@@ -69,7 +69,7 @@
         "Deployed on Railway with Nixpacks build config and Procfile process management"
       ],
       "repo": "https://github.com/mrznur/research-hub",
-      "live": "https://web-production-22be3.up.railway.app/",
+      "live": "https://research-hub-97vx.onrender.com/",
       "image": null
     },
     {
