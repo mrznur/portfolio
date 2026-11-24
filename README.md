@@ -1,16 +1,35 @@
 # Portfolio
 
-My personal portfolio site. Built with React + Vite + Tailwind.
+[![CI](https://github.com/mrznur/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/mrznur/portfolio/actions/workflows/ci.yml)
 
-Nothing fancy behind the scenes — just a single page with a modal-based nav, a splash screen that splits open on load, and all content pulled from a single `data.json` file so it's easy to update.
+Personal portfolio: a blueprint-themed single page with an interactive terminal and a live Game of 24 solver that demonstrates the dead-end-memory idea from my thesis. Live at https://miraz-nur.netlify.app/
 
-## Running it
+## Features
+
+- **Terminal** with command history (↑/↓), Tab completion, and `/` to focus
+- **Game of 24 solver** comparing plain DFS against DFS with dead-end memory
+- **Data-driven**: all content lives in `src/data/data.json`
+- Accessible (skip link, keyboard nav, `aria-live` output) and responsive
+
+## Structure
+
+```
+src/
+  App.jsx
+  components/   Terminal, Solver, ProjectCard, Title
+  lib/          solve24.js (pure logic) + solve24.test.js
+  data/         data.json
+```
+
+## Scripts
 
 ```bash
 npm install
-npm run dev
+npm run dev     # local dev server
+npm test        # Vitest unit tests for the solver
+npm run build   # production build
 ```
 
 ## Stack
 
-React, Vite, Tailwind CSS, DM Sans + Fraunces fonts.
+React, Vite, Tailwind CSS, Vitest. Fonts: Instrument Sans + JetBrains Mono.

@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #08111F; --panel: #0D1A2E; --line: #1C3254; --text: #D6E4F5;
+  --mute: #7F95B2; --amber: #FFB547; --cyan: #5CE1E6; --ok: #4ADE80;
+}
+
+@layer base {
+  html { font-size: 17px; scroll-behavior: smooth; }
+  body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    background-color: var(--bg);
+    /* blueprint grid: fine 20px lines + stronger 100px lines */
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px),
+      linear-gradient(#10213a 1px, transparent 1px),
+      linear-gradient(90deg, #10213a 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--amber); color: #08111F; }
+}
+
+@layer components {
+  .mono  { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .mute  { color: var(--mute); }
+  .amber { color: var(--amber); }
+  .cyan  { color: var(--cyan); }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
+  .btn   { font-family: 'JetBrains Mono', monospace; font-size: .85rem; padding: .55rem 1rem; border: 1px solid var(--line); border-radius: 4px; transition: all .15s; }
+  .btn:hover { border-color: var(--amber); color: var(--amber); }
+  .btn-primary { background: var(--amber); color: #08111F; border-color: var(--amber); font-weight: 700; }
+  .btn-primary:hover { background: transparent; color: var(--amber); }
+}
+
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .chev { transform: rotate(90deg); }
+.chev { transition: transform .15s; display: inline-block; }
+
+@keyframes blink { 50% { opacity: 0; } }
+.caret { animation: blink 1.1s steps(1) infinite; }
+.bar { transition: width .5s cubic-bezier(.2,.8,.2,1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .caret, .bar { animation: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* scroll-reveal (used by components/ui/Reveal) */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

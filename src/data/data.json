@@ -6,7 +6,8 @@
     "links": {
       "github": "https://github.com/mrznur",
       "linkedin": "https://www.linkedin.com/in/mahmudun-nur-miraz/",
-      "portfolio": "https://miraz-nur.netlify.app/"
+      "portfolio": "https://miraz-nur.netlify.app/",
+      "resume": "/resume.pdf"
     },
     "summary": "CS graduate who builds full-stack apps and researches LLM reasoning systems. I work across the stack — React frontends, REST APIs, SQL/NoSQL databases, and ML pipelines.",
     "about": "CS graduate with experience across full-stack web development and AI/ML research. I've built production-ready apps using React, TypeScript, Node.js, FastAPI, and Flask, and worked on LLM reasoning systems for my thesis. I care about clean architecture, readable code, and shipping things that actually work.",
@@ -102,7 +103,10 @@
       "Student model (v2) achieved 100% arithmetic accuracy per step after backtracking augmentation with variable dead-end depths and multi-level targets",
       "Fixed a format compliance gap in Gemma 4 31B (0% one-word compliance) via last-line extraction — recovered 100% label accuracy without changing the model",
       "Documented failure modes: beam selection bugs, extraction inconsistencies, and ground truth labelling errors in the eval suite"
-    ]
+    ],
+    "accuracy": "89%",
+    "headline": "89% Game of 24 · 30–80% states skipped · 0 API calls at inference",
+    "paper": null
   },
   "projects": [
     {
@@ -123,7 +127,7 @@
         "Auto-filing system with confidence scoring: findings above 0.7 are filed automatically, lower-confidence ones queue for user review",
         "Dead-End Memory pattern applied to session state — resumes exactly from where it stopped with full context preserved",
         "React frontend with Dashboard, Library (folder tree + Markdown viewer), Research session cards, Review queue, and Activity log",
-        "Deployed on Railway with Nixpacks build config and Procfile process management"
+        "Deployed on Render"
       ],
       "repo": "https://github.com/mrznur/research-hub",
       "live": "https://research-hub-97vx.onrender.com/",

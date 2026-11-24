@@ -1,56 +1,64 @@
-import ButtonLink from "./ButtonLink";
-import Tag from "./Tag";
-import Card from "./Card";
+import Button from "./ui/Button";
+import ImageSlot from "./ui/ImageSlot";
 
-export default function Hero({ person, tags }) {
+export default function Hero({ person, stats, aside }) {
   return (
-    <header className="pt-12 md:pt-16 pb-10">
-      <div className="mx-auto max-w-5xl px-4">
-        <div className="grid md:grid-cols-[1.25fr_0.75fr] gap-6 items-start">
-          <div>
-            <p className="text-sm text-slate-600">{person.location}</p>
+    <header className="pt-10 pb-16 md:pt-16 md:pb-24">
+      {/* Two-col on lg+, single col below */}
+      <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
 
-            <h1 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-slate-900 to-indigo-600 bg-clip-text text-transparent">
-                {person.name}
-              </span>
-            </h1>
-
-            <p className="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
-              {person.subheadline}
-            </p>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <ButtonLink href={person.links.github} variant="primary">
-                GitHub
-              </ButtonLink>
-              <ButtonLink href={person.links.linkedin} variant="secondary">
-                LinkedIn
-              </ButtonLink>
-              <ButtonLink href={`mailto:${person.email}`} variant="secondary">
-                Email
-              </ButtonLink>
-            </div>
-
-            <div className="mt-7 flex flex-wrap gap-2">
-              {tags.map((t) => (
-                <Tag key={t}>{t}</Tag>
-              ))}
-            </div>
+        {/* ── Left column ── */}
+        <div>
+          <div className="flex items-center gap-4">
+            <ImageSlot
+              src="/me.jpg"
+              alt={person.name}
+              ratio="1 / 1"
+              hint="/me.jpg"
+              className="h-16 w-16 sm:h-20 sm:w-20 shrink-0 rounded-full border"
+            />
+            <p className="mono text-xs sm:text-sm cyan break-all">{person.location}</p>
           </div>
 
-          <Card className="relative overflow-hidden">
-            <div className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-indigo-100 blur-2xl" />
-            <p className="text-sm font-semibold text-slate-900">
-              Quick Highlights
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-slate-600 list-disc pl-5">
-              <li>AI/ML thesis work on reasoning distillation</li>
-              <li>Full-stack apps with REST + database workflows</li>
-              <li>Modern UI using React + Tailwind components</li>
-            </ul>
-          </Card>
+          <h1 className="mt-4 text-[clamp(2rem,6vw,4.4rem)] font-bold leading-[1.05] tracking-tight">
+            {person.name}
+          </h1>
+
+          <p className="mono mt-4 text-base sm:text-lg amber">
+            Full-stack engineer<span className="caret">_</span>
+          </p>
+          <p className="mono mt-1 text-base sm:text-lg mute">LLM reasoning researcher</p>
+
+          <p className="mt-5 max-w-lg text-[1rem] sm:text-[1.05rem] mute leading-relaxed">
+            {person.summary}
+          </p>
+
+          {/* CTA buttons — wrap gracefully */}
+          <div className="mt-7 flex flex-wrap gap-2 sm:gap-3">
+            <Button href="#projects" variant="primary">view projects</Button>
+            {person.links.resume && <Button href={person.links.resume}>resume</Button>}
+            <Button href={`mailto:${person.email}`}>email</Button>
+            <Button href={person.links.github}>github</Button>
+            <Button href={person.links.linkedin}>linkedin</Button>
+          </div>
+
+          {/* Stats row — wrap on very small screens */}
+          <dl className="mono mt-8 flex flex-wrap gap-6 sm:gap-8 text-sm">
+            {stats.map(([n, l]) => (
+              <div key={l}>
+                <dd className="text-xl sm:text-2xl font-bold">{n}</dd>
+                <dt className="mute">{l}</dt>
+              </div>
+            ))}
+          </dl>
         </div>
+
+        {/* ── Right column: Terminal ── */}
+        {/* On mobile sits below, full width. On lg+ sits beside. */}
+        <div className="w-full min-w-0">
+          {aside}
+        </div>
+
       </div>
     </header>
   );
