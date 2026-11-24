@@ -25,3 +25,4 @@ dist-ssr
 
 # Windows reserved device name (created accidentally)
 nul
+.aider*

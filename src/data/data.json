@@ -25,24 +25,74 @@
       }
     ]
   },
-
   "skills": {
-    "languages": ["JavaScript", "Python", "TypeScript", "C", "C++", "HTML", "CSS"],
-    "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-    "backend": ["Node.js", "Express.js", "Flask", "FastAPI", "Django", "REST API"],
-    "database": ["PostgreSQL", "MongoDB", "MySQL", "SQLite"],
-    "tools": ["Git", "GitHub", "Postman", "SQLAlchemy", "Shopify", "Squarespace"],
-    "concepts": [
-      "Data Structures", "Algorithms", "OOP", "DBMS",
-      "API Integration", "Clean Code", "Debugging",
-      "Modular Design", "REST Architecture"
+    "languages": [
+      "JavaScript",
+      "Python",
+      "TypeScript",
+      "C",
+      "C++",
+      "HTML",
+      "CSS"
     ],
-    "ml": ["DeepFace", "MediaPipe", "TensorFlow", "PyTorch", "NumPy"]
+    "frontend": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS"
+    ],
+    "backend": [
+      "Node.js",
+      "Express.js",
+      "NestJS",
+      "Flask",
+      "FastAPI",
+      "Django",
+      "REST API"
+    ],
+    "database": [
+      "PostgreSQL",
+      "MongoDB",
+      "MySQL",
+      "SQLite"
+    ],
+    "tools": [
+      "Git",
+      "GitHub",
+      "Postman",
+      "SQLAlchemy",
+      "Shopify",
+      "Squarespace"
+    ],
+    "concepts": [
+      "Data Structures",
+      "Algorithms",
+      "OOP",
+      "DBMS",
+      "API Integration",
+      "Clean Code",
+      "Debugging",
+      "Modular Design",
+      "REST Architecture"
+    ],
+    "ml": [
+      "DeepFace",
+      "MediaPipe",
+      "TensorFlow",
+      "PyTorch",
+      "NumPy"
+    ]
   },
-
   "research": {
     "title": "Tree of Thoughts with CodeAct Pattern — Thesis",
-    "stack": ["Python", "DeepSeek API", "Gemma 4 31B", "Qwen", "PyTorch", "Transformers"],
+    "stack": [
+      "Python",
+      "DeepSeek API",
+      "Gemma 4 31B",
+      "Qwen",
+      "PyTorch",
+      "Transformers"
+    ],
     "points": [
       "Built a Tree-of-Thoughts framework where LLMs generate and execute Python code at each search step instead of free-form text — making reasoning verifiable via sandbox execution",
       "Achieved 89% accuracy on the Game of 24 task (100-puzzle test set) using DeepSeek as teacher and Gemma 4 31B, averaging 45 API calls per puzzle",
@@ -54,11 +104,18 @@
       "Documented failure modes: beam selection bugs, extraction inconsistencies, and ground truth labelling errors in the eval suite"
     ]
   },
-
   "projects": [
     {
       "title": "Research Hub — AI-Powered Research Assistant",
-      "stack": ["React", "Vite", "FastAPI", "Python", "Groq API", "Tavily API", "SQLite"],
+      "stack": [
+        "React",
+        "Vite",
+        "FastAPI",
+        "Python",
+        "Groq API",
+        "Tavily API",
+        "SQLite"
+      ],
       "points": [
         "Full-stack AI research tool that autonomously searches, reasons, and files findings into a structured knowledge library",
         "FastAPI backend with a multi-tool LLM agent loop — file, search, save progress, and review tools wired to Groq-hosted models",
@@ -73,8 +130,48 @@
       "image": null
     },
     {
+      "title": "BUCC Event Registration System — Full-Stack Event Platform",
+      "stack": [
+        "Next.js 16",
+        "TypeScript",
+        "NestJS",
+        "PostgreSQL",
+        "Tailwind CSS 4",
+        "Zod",
+        "Embla Carousel",
+        "qr-scanner"
+      ],
+      "points": [
+        "Production event registration platform for the BRAC University Computer Club — separate Next.js 16 frontend and NestJS backend, deployed on Vercel",
+        "NestJS backend with JWT auth, email verification codes, password reset flow, and three roles (Attendee, Organizer, Admin) with route-level guards — events CRUD, registrations, tickets, and QR check-in endpoints",
+        "Next.js 16 frontend using the App Router with Cache Components and Partial Prerendering — public pages prerender as static shells while auth-dependent content streams in dynamically behind Suspense boundaries",
+        "Server-side auth guards on /dashboard and /admin via next/headers cookie forwarding — unauthenticated requests redirect to /organizer/log-in, admin routes require ADMIN role and redirect otherwise",
+        "API proxy pattern: browser /api/* requests rewrite to the backend, while server components call the backend directly using API_URL with the session cookie forwarded — keeps the backend URL out of client bundles",
+        "Homepage with a full-screen autoplay event carousel (Embla), an About section that's a desktop click-to-reveal image grid and a mobile tap-to-expand accordion, impact stats, activities, and a member photo carousel",
+        "Event listing with URL-driven category filter (Workshop/Hackathon/Talk/Social) and an availability chip computed on the frontend — Open / Almost Full / Full / Closed derived from capacity, spotsLeft, and endsAt",
+        "Registration form with Zod validation (name, email, phone) that POSTs to the backend and returns a ticket page with a generated QR code",
+        "Ticket page rendering QR codes via the qrcode library with status states (Confirmed / Checked In / Cancelled), designed to be scanned at the door",
+        "Organizer dashboard: create/edit events with draft→published lifecycle, publish/unpublish/cancel actions, and a registrations table with live search and CSV export",
+        "Check-in page with a camera-based QR scanner (qr-scanner) plus a manual name/email search fallback — green/red result states for checked-in vs already-scanned vs invalid",
+        "Admin panel hidden behind a configurable route (sys/panel, noindex) with user management and cross-organizer event cancellation",
+        "Tailwind CSS 4 with Turbopack, a custom design token system (ink/paper/lime/stone), accessible focus styles, scroll-driven animations, and full mobile-first responsive layouts",
+        "Every page sets a metadata title that composes with a root '%s | BUCC' template, plus a custom black-and-white SVG favicon matching the navbar logo"
+      ],
+      "repo": "https://github.com/mrznur/event-reg-system",
+      "live": "https://event-reg-frontend.vercel.app",
+      "image": null
+    },
+    {
       "title": "Face Detection System — Real-Time Recognition & Presence Detection",
-      "stack": ["FastAPI", "PostgreSQL", "SQLAlchemy", "DeepFace", "MediaPipe", "React", "TypeScript"],
+      "stack": [
+        "FastAPI",
+        "PostgreSQL",
+        "SQLAlchemy",
+        "DeepFace",
+        "MediaPipe",
+        "React",
+        "TypeScript"
+      ],
       "points": [
         "Full-stack face recognition and presence detection system with real-time verification",
         "FastAPI backend handling person enrollment, face verification, and activity logging",
@@ -88,7 +185,17 @@
     },
     {
       "title": "404 Project Not Found — Task Manager & Image Annotator",
-      "stack": ["Next.js", "TypeScript", "Django", "DRF", "SQLite", "Tailwind CSS v4", "JWT", "React Context", "@dnd-kit"],
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Django",
+        "DRF",
+        "SQLite",
+        "Tailwind CSS v4",
+        "JWT",
+        "React Context",
+        "@dnd-kit"
+      ],
       "points": [
         "Full-stack SaaS-style productivity app with two modules: a Kanban task manager and a polygon image annotation tool",
         "Django REST Framework backend with JWT auth — login, protected routes, per-user data isolation across all endpoints",
@@ -105,7 +212,13 @@
     },
     {
       "title": "QuickHire — Full-Stack Job Board",
-      "stack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+      "stack": [
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Tailwind CSS"
+      ],
       "points": [
         "Job platform with browsing, application flow, and admin management",
         "Express + MongoDB REST API with structured models and role-based routing",
@@ -118,36 +231,13 @@
       "image": null
     },
     {
-      "title": "TUFFCORE Fitness — Client Landing Page",
-      "stack": ["React", "Vite", "Tailwind CSS v4", "JavaScript"],
-      "points": [
-        "Multi-section landing page for a women-only fitness studio in Oxford",
-        "Custom Tailwind v4 theme with Gotham font via @font-face across 7 weights",
-        "Horizontal programme carousel with scroll navigation and active dot indicators",
-        "YouTube embed with custom overlay — swaps to iframe on play, suppresses branding",
-        "Reviews slider with responsive card count (1/2/3 by breakpoint) and read-more toggle"
-      ],
-      "repo": "https://github.com/mrznur/FPL-Task-Repo",
-      "live": "https://tuffcore.vercel.app/",
-      "image": null
-    },
-    {
-      "title": "Get Hyped — Agency Website Clone",
-      "stack": ["React", "Vite", "Tailwind CSS", "Lenis"],
-      "points": [
-        "Marketing site clone with scroll-driven card stack animation via custom scroll hook",
-        "Mouse trail effect spawning logo elements using React portals",
-        "SVG trapezium footer with three distinct responsive layouts",
-        "Smooth scroll via Lenis, entrance animations on section headings",
-        "Animated hamburger, hover-slide nav links, tilt-on-hover hero cards"
-      ],
-      "repo": "https://github.com/mrznur/GetHyped",
-      "live": "https://gethypedclone.netlify.app/",
-      "image": null
-    },
-    {
       "title": "Bashpo — Game Marketplace",
-      "stack": ["Flask", "SQLite", "JavaScript", "Tailwind CSS"],
+      "stack": [
+        "Flask",
+        "SQLite",
+        "JavaScript",
+        "Tailwind CSS"
+      ],
       "points": [
         "Full-stack gaming marketplace with user auth, product listings, cart, and purchase flow",
         "Flask backend with session-based authentication and role-based access control for buyers and admins",
@@ -161,24 +251,48 @@
       "image": null
     },
     {
-      "title": "Weather Forecast App",
-      "stack": ["React", "Tailwind CSS", "WeatherAPI"],
-      "points": [
-        "Real-time weather via WeatherAPI with 7-day forecast",
-        "Reusable React component structure with state-driven UI updates",
-        "Environment variable handling for API key security"
+      "title": "TUFFCORE Fitness — Client Landing Page",
+      "stack": [
+        "React",
+        "Vite",
+        "Tailwind CSS v4",
+        "JavaScript"
       ],
-      "repo": "https://github.com/mrznur/weather",
-      "live": "https://weatherapi-checker.netlify.app/",
+      "points": [
+        "Multi-section landing page for a women-only fitness studio in Oxford",
+        "Custom Tailwind v4 theme with Gotham font via @font-face across 7 weights",
+        "Horizontal programme carousel with scroll navigation and active dot indicators",
+        "YouTube embed with custom overlay — swaps to iframe on play, suppresses branding",
+        "Reviews slider with responsive card count (1/2/3 by breakpoint) and read-more toggle"
+      ],
+      "repo": "https://github.com/mrznur/FPL-Task-Repo",
+      "live": "https://tuffcore.vercel.app/",
+      "image": null
+    },
+    {
+      "title": "Get Hyped — Agency Website Clone",
+      "stack": [
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "Lenis"
+      ],
+      "points": [
+        "Marketing site clone with scroll-driven card stack animation via custom scroll hook",
+        "Mouse trail effect spawning logo elements using React portals",
+        "SVG trapezium footer with three distinct responsive layouts",
+        "Smooth scroll via Lenis, entrance animations on section headings",
+        "Animated hamburger, hover-slide nav links, tilt-on-hover hero cards"
+      ],
+      "repo": "https://github.com/mrznur/GetHyped",
+      "live": "https://gethypedclone.netlify.app/",
       "image": null
     }
   ],
-
   "education": {
     "title": "BRAC University — BSc in Computer Science",
     "meta": "Sep 2021 – May 2026 • Graduated"
   },
-
   "certifications": [
     {
       "title": "IELTS",
@@ -186,12 +300,16 @@
       "detail": "Band 7.0 — R: 7.5, L: 7.5, S: 7.0, W: 6.0"
     }
   ],
-
   "languages": [
-    { "name": "English", "level": "Fluent" },
-    { "name": "Bengali", "level": "Native" }
+    {
+      "name": "English",
+      "level": "Fluent"
+    },
+    {
+      "name": "Bengali",
+      "level": "Native"
+    }
   ],
-
   "experience": [
     {
       "title": "Transcriber & Translator — CS50 (Harvard)",

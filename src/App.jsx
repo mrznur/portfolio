@@ -1,419 +1,575 @@
-import { useState } from "react";
-import Splash from "./components/Splash";
-import Navbar from "./components/Navbar";
-import Modal from "./components/Modal";
-import Section from "./components/Section";
-import Card from "./components/Card";
-import Tag from "./components/Tag";
-import ButtonLink from "./components/ButtonLink";
-import ProjectCard from "./components/ProjectCard";
-import Typewriter from "./components/Typewriter";
+import { useEffect, useMemo, useRef, useState } from "react";
 import data from "./data/data.json";
 
-const DF = "'Fraunces', Georgia, serif";
+/* ───────── Game of 24 solver: DFS with optional Dead-End Memory ───────── */
+const solve = (nums, prune) => {
+  let explored = 0,
+    skipped = 0,
+    found = null;
+  const dead = new Set();
+  const dfs = (items) => {
+    if (found) return;
+    if (items.length === 1) {
+      if (Math.abs(items[0].v - 24) < 1e-6) found = items[0].e;
+      return;
+    }
+    const key = items
+      .map((i) => Math.round(i.v * 1e4))
+      .sort((a, b) => a - b)
+      .join(",");
+    if (prune && dead.has(key)) {
+      skipped++;
+      return;
+    }
+    explored++;
+    for (let i = 0; i < items.length; i++)
+      for (let j = i + 1; j < items.length; j++) {
+        const a = items[i],
+          b = items[j],
+          rest = items.filter((_, k) => k !== i && k !== j);
+        const c = [
+          [a.v + b.v, `(${a.e}+${b.e})`],
+          [a.v * b.v, `(${a.e}×${b.e})`],
+          [a.v - b.v, `(${a.e}-${b.e})`],
+          [b.v - a.v, `(${b.e}-${a.e})`],
+        ];
+        if (b.v) c.push([a.v / b.v, `(${a.e}÷${b.e})`]);
+        if (a.v) c.push([b.v / a.v, `(${b.e}÷${a.e})`]);
+        for (const [v, e] of c) {
+          dfs([...rest, { v, e }]);
+          if (found) return;
+        }
+      }
+    if (prune) dead.add(key); // failed subtree: never re-explore this state
+  };
+  dfs(nums.map((n) => ({ v: n, e: String(n) })));
+  return { found, explored, skipped };
+};
 
-const ExtIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-  </svg>
-);
+function Solver() {
+  const [input, setInput] = useState("1 1 5 5");
+  const res = useMemo(() => {
+    const nums = input
+      .trim()
+      .split(/[\s,]+/)
+      .map(Number);
+    if (nums.length !== 4 || nums.some((n) => !Number.isFinite(n))) return null;
+    return { plain: solve(nums, false), pruned: solve(nums, true) };
+  }, [input]);
 
-const Divider = () => <div className="border-t border-white/6 my-6" />;
+  const Row = ({ label, r, color }) => (
+    <div>
+      <div className="flex justify-between mono text-xs mute">
+        <span>{label}</span>
+        <span>
+          {r.explored} states{r.skipped ? `, ${r.skipped} skipped` : ""}
+        </span>
+      </div>
+      <div className="mt-1 h-2 rounded-sm" style={{ background: "#12233d" }}>
+        <div
+          className="bar h-2 rounded-sm"
+          style={{
+            width: `${Math.max(3, (r.explored / res.plain.explored) * 100)}%`,
+            background: color,
+          }}
+        />
+      </div>
+    </div>
+  );
 
-const InfoRow = ({ icon, children }) => (
-  <div className="flex items-start gap-3 text-slate-300">{icon}<span>{children}</span></div>
+  return (
+    <div className="panel p-5">
+      <label className="mono text-xs mute" htmlFor="g24">
+        input: four numbers
+      </label>
+      <input
+        id="g24"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        spellCheck={false}
+        className="mono mt-1 w-full rounded bg-transparent border px-3 py-2 text-lg amber"
+        style={{ borderColor: "var(--line)" }}
+      />
+      {res ? (
+        <div className="mt-5 space-y-4">
+          <p className="mono text-sm">
+            {res.plain.found ? (
+              <>
+                <span className="mute">solution </span>
+                <span className="cyan">
+                  {res.plain.found.slice(1, -1)} = 24
+                </span>
+              </>
+            ) : (
+              <span className="mute">no solution: search exhausted</span>
+            )}
+          </p>
+          <Row label="plain DFS" r={res.plain} color="#7F95B2" />
+          <Row
+            label="with dead-end memory"
+            r={res.pruned}
+            color="var(--amber)"
+          />
+        </div>
+      ) : (
+        <p className="mono text-sm mt-4 mute">
+          Enter exactly four numbers, e.g. 4 7 8 8
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ───────── Interactive terminal ───────── */
+function Terminal() {
+  const { person, projects, skills, research } = data;
+  const name = (p) => p.title.split(" — ")[0];
+  const COMMANDS = {
+    whoami: () => [person.name, person.summary],
+    projects: () => [
+      ...projects.map(
+        (p, i) => `[${i + 1}] ${name(p)}${p.live ? "  (live)" : ""}`,
+      ),
+      "→ open <n> to visit",
+    ],
+    skills: () => [
+      `frontend  ${skills.frontend.join(", ")}`,
+      `backend   ${skills.backend.join(", ")}`,
+      `ai/ml     ${skills.ml.join(", ")}`,
+    ],
+    research: () => [
+      research.title.split(" — ")[0],
+      "89% Game of 24 · 30–80% states skipped · 0 API calls at inference",
+    ],
+    contact: () => [person.email, person.links.github, person.links.linkedin],
+    help: () => [
+      "whoami  projects  skills  research  contact",
+      "open <n|github|linkedin>   clear",
+    ],
+  };
+  const [lines, setLines] = useState([
+    { k: "in", t: "whoami" },
+    { k: "out", t: COMMANDS.whoami() },
+  ]);
+  const [val, setVal] = useState("");
+  const box = useRef(null);
+  useEffect(() => {
+    if (box.current) box.current.scrollTop = box.current.scrollHeight;
+  }, [lines]);
+
+  const run = (raw) => {
+    const [cmd, arg] = raw.trim().toLowerCase().split(/\s+/);
+    if (!cmd) return;
+    if (cmd === "clear") return setLines([]);
+    let out;
+    if (cmd === "open") {
+      const p = projects[Number(arg) - 1];
+      const url = p
+        ? p.live || p.repo
+        : { github: person.links.github, linkedin: person.links.linkedin }[arg];
+      out = url
+        ? [`opening ${url}`]
+        : ["usage: open <project number | github | linkedin>"];
+      if (url) window.open(url, "_blank", "noopener");
+    } else
+      out = COMMANDS[cmd]
+        ? COMMANDS[cmd]()
+        : [`command not found: ${cmd}. Try help.`];
+    setLines((l) => [...l, { k: "in", t: raw }, { k: "out", t: out }]);
+  };
+
+  return (
+    <div className="panel overflow-hidden">
+      <div
+        className="mono flex items-center justify-between border-b px-4 py-2 text-xs mute"
+        style={{ borderColor: "var(--line)" }}
+      >
+        <span>miraz@portfolio: ~</span>
+        <span>interactive</span>
+      </div>
+      <div
+        ref={box}
+        className="mono h-72 overflow-y-auto px-4 py-3 text-[0.82rem] leading-6"
+        aria-live="polite"
+      >
+        {lines.map((l, i) =>
+          l.k === "in" ? (
+            <div key={i}>
+              <span className="amber">$</span> {l.t}
+            </div>
+          ) : (
+            <div key={i} className="mute mb-1">
+              {l.t.map((s, j) => (
+                <div key={j} className="whitespace-pre-wrap break-words">
+                  {s}
+                </div>
+              ))}
+            </div>
+          ),
+        )}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            run(val);
+            setVal("");
+          }}
+          className="flex"
+        >
+          <span className="amber mr-2">$</span>
+          <input
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
+            aria-label="Terminal command"
+            autoComplete="off"
+            spellCheck={false}
+            placeholder="type help"
+            className="flex-1 bg-transparent outline-none placeholder:text-[#3c5276]"
+          />
+        </form>
+      </div>
+      <div
+        className="flex flex-wrap gap-2 border-t px-4 py-3"
+        style={{ borderColor: "var(--line)" }}
+      >
+        {["projects", "skills", "research", "contact", "help"].map((c) => (
+          <button
+            key={c}
+            onClick={() => run(c)}
+            className="mono rounded border px-2.5 py-1 text-xs mute hover:text-[color:var(--amber)] hover:border-[color:var(--amber)] transition-colors"
+            style={{ borderColor: "var(--line)" }}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const Title = ({ path, sub }) => (
+  <div className="mb-8">
+    <h2 className="mono text-2xl md:text-3xl font-bold">
+      <span className="amber">/</span>
+      {path}
+    </h2>
+    {sub && <p className="mt-2 mute max-w-2xl">{sub}</p>}
+  </div>
 );
 
 export default function App() {
-  const { person, skills, research, projects, education, experience, certifications, languages } = data;
-  const [modal,      setModal]      = useState(null);
-  const [splashDone, setSplashDone] = useState(false);
-
-  const openModal  = (id) => setModal(id);
-  const closeModal = () => setModal(null);
-
-  /* ── Modal content ──────────────────────────────── */
-  const modalContent = () => {
-    switch (modal) {
-
-      case "about": return (
-        <div className="space-y-5">
-          <p className="leading-7 text-slate-300">{person.about}</p>
-          <Divider />
-          <p className="text-[0.65rem] font-bold tracking-[0.2em] text-blue-500 uppercase mb-4">Quick Info</p>
-          <div className="space-y-3">
-            <InfoRow icon={<span>📍</span>}>{person.location}</InfoRow>
-            <InfoRow icon={<span>📧</span>}>
-              <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors">
-                {person.email}
-              </a>
-            </InfoRow>
-          </div>
-        </div>
-      );
-
-      case "what-i-do": return (
-        <div className="space-y-5">
-          {person.whatIDo.map((item, i) => (
-            <div key={i} className="flex gap-4 pb-5 border-b border-white/5 last:border-0 last:pb-0">
-              <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-blue-400 text-xs font-bold">{i + 1}</span>
-              </div>
-              <div>
-                <p className="font-semibold text-white text-[0.95rem]">{item.title}</p>
-                <p className="mt-1.5 text-slate-400 leading-7 text-[0.9rem]">{item.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-
-      case "projects": return (
-        <div className="space-y-7">
-          {projects.map((p) => (
-            <div key={p.title} className="pb-7 border-b border-white/5 last:border-0 last:pb-0">
-              <p className="font-semibold text-white text-[0.95rem]">{p.title}</p>
-              <div className="flex flex-wrap gap-1.5 mt-2.5">
-                {p.stack.map((t) => <Tag key={t}>{t}</Tag>)}
-              </div>
-              <ul className="mt-3.5 space-y-2 text-[0.88rem] text-slate-400 list-disc pl-4 leading-relaxed">
-                {p.points.map((pt, i) => <li key={i}>{pt}</li>)}
-              </ul>
-              <div className="flex gap-6 mt-4 text-[0.85rem] font-medium">
-                {p.repo && <a href={p.repo} target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1.5">Repository <ExtIcon /></a>}
-                {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5">Live Demo <ExtIcon /></a>}
-              </div>
-            </div>
-          ))}
-        </div>
-      );
-
-      case "research": return (
-        <div>
-          <p className="font-semibold text-white text-[0.95rem] mb-3" style={{ fontFamily: DF }}>{research.title}</p>
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {research.stack.map((s) => <Tag key={s}>{s}</Tag>)}
-          </div>
-          <ul className="space-y-3 text-[0.88rem] text-slate-400 list-disc pl-4 leading-relaxed">
-            {research.points.map((p, i) => <li key={i}>{p}</li>)}
-          </ul>
-        </div>
-      );
-
-      case "education": return (
-        <div>
-          <p className="font-semibold text-white text-[0.95rem]">{education.title}</p>
-          <p className="mt-1.5 text-slate-400 text-[0.9rem]">{education.meta}</p>
-          <Divider />
-          <p className="text-[0.65rem] font-bold tracking-[0.2em] text-blue-500 uppercase mb-4">Certifications & Languages</p>
-          {certifications.map((c, i) => (
-            <p key={i} className="text-slate-400 text-[0.9rem] mb-2">
-              <span className="text-slate-200 font-medium">{c.title}</span> ({c.year}) — {c.detail}
-            </p>
-          ))}
-          <div className="flex flex-wrap gap-x-8 gap-y-2 mt-4">
-            {languages.map((l) => (
-              <span key={l.name} className="text-slate-400 text-[0.9rem]">
-                <span className="text-slate-200 font-medium">{l.name}</span> — {l.level}
-              </span>
-            ))}
-          </div>
-        </div>
-      );
-
-      case "experience": return (
-        <div className="space-y-6">
-          {experience.map((e) => (
-            <div key={e.title} className="pb-6 border-b border-white/5 last:border-0 last:pb-0">
-              <p className="font-semibold text-white text-[0.95rem]">{e.title}</p>
-              <p className="mt-1.5 text-[0.75rem] text-blue-400 font-semibold tracking-wide">{e.time}</p>
-              <p className="mt-2.5 text-slate-400 leading-7 text-[0.9rem]">{e.desc}</p>
-            </div>
-          ))}
-        </div>
-      );
-
-      case "contact": return (
-        <div className="space-y-3">
-          {[
-            { label: "Email", content: <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors">{person.email}</a> },
-            {
-              label: "Links", content: (
-                <div className="space-y-3">
-                  {[
-                    { name: "GitHub",    href: person.links.github    },
-                    { name: "LinkedIn",  href: person.links.linkedin  },
-                    { name: "Portfolio", href: person.links.portfolio },
-                  ].map((l) => (
-                    <a key={l.name} href={l.href} target="_blank" rel="noreferrer"
-                      className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors">
-                      {l.name} <ExtIcon />
-                    </a>
-                  ))}
-                </div>
-              )
-            },
-          ].map(({ label, content }) => (
-            <div key={label} className="rounded-xl border border-white/6 bg-white/[0.03] px-5 py-4">
-              <p className="text-[0.65rem] font-bold tracking-[0.2em] text-blue-500 uppercase mb-3">{label}</p>
-              {content}
-            </div>
-          ))}
-        </div>
-      );
-
-      default: return null;
-    }
+  const { person, skills, research, projects, education, experience } = data;
+  const liveCount = projects.filter((p) => p.live).length;
+  const code = {
+    languages: skills.languages,
+    frontend: skills.frontend,
+    backend: skills.backend,
+    data: [...skills.database, ...skills.tools],
+    ml: skills.ml,
   };
-
-  const modalTitles = {
-    about: "About Me", "what-i-do": "What I Do", projects: "Projects",
-    research: "Research / Thesis", education: "Education",
-    experience: "Experience", contact: "Contact",
-  };
-
-  const skillGroups = [
-    { label: "Languages",        items: skills.languages },
-    { label: "Frontend",         items: skills.frontend  },
-    { label: "Backend",          items: skills.backend   },
-    { label: "Database & Tools", items: [...skills.database, ...skills.tools] },
-    { label: "AI / ML",          items: skills.ml        },
-    { label: "Core Concepts",    items: skills.concepts  },
-  ];
 
   return (
-    <>
-      {!splashDone && <Splash onDone={() => setSplashDone(true)} />}
-
-      <div
-        id="top"
-        className={`min-h-screen transition-opacity duration-700 ${
-          splashDone ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+    <div id="top">
+      <nav
+        aria-label="Sections"
+        className="sticky top-0 z-40 border-b backdrop-blur"
+        style={{ borderColor: "var(--line)", background: "rgba(8,17,31,.85)" }}
       >
-        <Navbar onNavClick={openModal} activeModal={modal} />
-
-        <Modal isOpen={!!modal} onClose={closeModal} title={modalTitles[modal] || ""}>
-          {modalContent()}
-        </Modal>
-
-        {/* ── Hero ──────────────────────────────────────── */}
-        <header id="about" className="relative pt-28 md:pt-40 pb-24 px-6 overflow-hidden">
-          {/* Grid background */}
-          <div className="fixed inset-0 -z-10 bg-[#080c14]">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#47556930_1px,transparent_1px),linear-gradient(to_bottom,#47556930_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_90%_70%_at_50%_40%,#000_70%,transparent_100%)] [-webkit-mask-image:radial-gradient(ellipse_90%_70%_at_50%_40%,#000_70%,transparent_100%)] [mask-repeat:no-repeat] [-webkit-mask-repeat:no-repeat]" />
-          </div>
-
-          <div className="relative mx-auto max-w-5xl">
-            {/* Open to work badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/8 mb-6">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-semibold text-emerald-400 tracking-wide">Open to work — available now</span>
-            </div>
-
-            <p className="text-[0.65rem] font-bold tracking-[0.3em] text-blue-500 uppercase mb-4">
-              {person.location}
-            </p>
-
-            <h1
-              className="text-[clamp(2.5rem,6vw,5rem)] font-bold text-white leading-[1.07] tracking-tight"
-              style={{ fontFamily: DF }}
+        <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between mono text-sm">
+          <a href="#top" className="font-bold">
+            miraz<span className="amber">.dev</span>
+          </a>
+          <div className="flex items-center gap-5 mute">
+            {["projects", "research", "skills", "contact"].map((s) => (
+              <a
+                key={s}
+                href={`#${s}`}
+                className="hidden sm:block hover:text-[color:var(--amber)] transition-colors"
+              >
+                {s}
+              </a>
+            ))}
+            <span
+              className="flex items-center gap-2"
+              style={{ color: "var(--ok)" }}
             >
+              <span
+                className="h-2 w-2 rounded-full animate-pulse"
+                style={{ background: "var(--ok)" }}
+              />
+              open to work
+            </span>
+          </div>
+        </div>
+      </nav>
+
+      <main className="mx-auto max-w-6xl px-6">
+        {/* Hero */}
+        <header className="grid lg:grid-cols-2 gap-10 items-center pt-16 pb-24 lg:pt-24">
+          <div>
+            <p className="mono text-sm cyan">{person.location}</p>
+            <h1 className="mt-4 text-[clamp(2.4rem,5.5vw,4.4rem)] font-bold leading-[1.02] tracking-tight">
               {person.name}
             </h1>
-
-            <div className="mt-5 text-[1.05rem] md:text-[1.12rem] leading-8 min-h-[2rem] text-slate-300">
-              <Typewriter />
-            </div>
-
-            <p className="mt-4 text-[0.97rem] text-slate-400 max-w-xl leading-[1.9]">
+            <p className="mono mt-5 text-lg amber">
+              Full-stack engineer<span className="caret">_</span>
+            </p>
+            <p className="mt-2 text-lg mono" style={{ color: "var(--text)" }}>
+              LLM reasoning researcher
+            </p>
+            <p className="mt-6 max-w-lg text-[1.05rem] mute">
               {person.summary}
             </p>
-
-            {/* Quick stats row */}
-            <div className="mt-8 flex flex-wrap gap-6 text-sm text-slate-400 border-t border-white/6 pt-6">
-              <div>
-                <span className="text-white font-semibold text-lg">10+</span>
-                <span className="ml-1.5">Projects shipped</span>
-              </div>
-              <div>
-                <span className="text-white font-semibold text-lg">89%</span>
-                <span className="ml-1.5">Thesis accuracy</span>
-              </div>
-              <div>
-                <span className="text-white font-semibold text-lg">4+</span>
-                <span className="ml-1.5">Years coding</span>
-              </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#projects" className="btn btn-primary">
+                view projects
+              </a>
+              <a href={`mailto:${person.email}`} className="btn">
+                send email
+              </a>
+              <a
+                href={person.links.github}
+                target="_blank"
+                rel="noreferrer"
+                className="btn"
+              >
+                github
+              </a>
+              <a
+                href={person.links.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="btn"
+              >
+                linkedin
+              </a>
             </div>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href={person.links.github}>GitHub</ButtonLink>
-              <ButtonLink href={person.links.linkedin}>LinkedIn</ButtonLink>
-              <ButtonLink href={`mailto:${person.email}`}>Email</ButtonLink>
-            </div>
+            <dl className="mono mt-10 flex gap-8 text-sm">
+              {[
+                [projects.length, "projects"],
+                [liveCount, "deployed"],
+                ["89%", "thesis acc."],
+              ].map(([n, l]) => (
+                <div key={l}>
+                  <dd className="text-2xl font-bold">{n}</dd>
+                  <dt className="mute">{l}</dt>
+                </div>
+              ))}
+            </dl>
           </div>
+          <Terminal />
         </header>
 
-        <main className="mx-auto max-w-5xl px-6">
-
-          {/* What I Do */}
-          <Section id="what-i-do" title="What I Do" variant="jsx">
-            <div className="grid md:grid-cols-3 gap-4">
-              {person.whatIDo.map((item, i) => (
-                <Card key={i}>
-                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
-                    <span className="text-blue-400 text-xs font-bold">{i + 1}</span>
-                  </div>
-                  <p className="font-semibold text-white text-[0.95rem] mb-2" style={{ fontFamily: DF }}>{item.title}</p>
-                  <p className="text-slate-400 text-[0.88rem] leading-relaxed">{item.description}</p>
-                </Card>
-              ))}
-            </div>
-          </Section>
-
-          {/* Projects */}
-          <Section id="projects" title="Projects" variant="jsx">
-            <div className="grid md:grid-cols-2 gap-4">
-              {projects.map((p) => <ProjectCard key={p.title} project={p} />)}
-            </div>
-          </Section>
-
-          {/* Skills */}
-          <Section id="skills" title="Skills" variant="obj">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              {skillGroups.map(({ label, items }) => (
-                <Card key={label}>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3.5">{label}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {items.map((x) => <Tag key={x}>{x}</Tag>)}
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </Section>
-
-          {/* Research */}
-          <Section id="research" title="Research" variant="comment">
-            <Card>
-              <p className="font-semibold text-white text-[1rem]" style={{ fontFamily: DF }}>
-                {research.title}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {research.stack.map((s) => <Tag key={s}>{s}</Tag>)}
-              </div>
-              <ul className="mt-5 space-y-2.5 text-[0.95rem] text-slate-400 list-disc pl-4 leading-relaxed">
-                {research.points.map((p, i) => <li key={i}>{p}</li>)}
-              </ul>
-            </Card>
-          </Section>
-
-          {/* Education */}
-          <Section id="education" title="Education" variant="obj">
-            <div className="grid md:grid-cols-2 gap-4">
-              <Card>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">University</p>
-                <p className="font-semibold text-white text-[1rem]">{education.title}</p>
-                <p className="mt-1.5 text-slate-400">{education.meta}</p>
-              </Card>
-              <Card>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Certifications & Languages</p>
-                {certifications.map((c) => (
-                  <p key={c.title} className="text-slate-400 mb-2">
-                    <span className="text-slate-200 font-medium">{c.title}</span> ({c.year}) — {c.detail}
-                  </p>
-                ))}
-                <div className="flex flex-wrap gap-x-6 gap-y-1.5 mt-3">
-                  {languages.map((l) => (
-                    <span key={l.name} className="text-slate-400">
-                      <span className="text-slate-200 font-medium">{l.name}</span> — {l.level}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            </div>
-          </Section>
-
-          {/* Experience */}
-          <Section id="experience" title="Experience" variant="jsx">
-            <div className="grid md:grid-cols-2 gap-4">
-              {experience.map((e) => (
-                <Card key={e.title}>
-                  <p className="font-semibold text-white text-[0.95rem] leading-snug">{e.title}</p>
-                  <p className="mt-2 text-[0.72rem] text-blue-500 font-bold tracking-wider uppercase">{e.time}</p>
-                  <p className="mt-2 text-[0.95rem] text-slate-400 leading-7">{e.desc}</p>
-                </Card>
-              ))}
-            </div>
-          </Section>
-
-          {/* Contact */}
-          <Section id="contact" title="Contact" variant="jsx">
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Left — info */}
-              <div className="space-y-4">
-                <Card>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Email</p>
-                  <a href={`mailto:${person.email}`} className="text-blue-400 hover:text-blue-300 transition-colors break-all">
-                    {person.email}
-                  </a>
-                </Card>
-                <Card>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Links</p>
-                  <div className="space-y-2.5">
-                    {[
-                      { name: "GitHub",    href: person.links.github    },
-                      { name: "LinkedIn",  href: person.links.linkedin  },
-                      { name: "Portfolio", href: person.links.portfolio },
-                    ].map((l) => (
-                      <a key={l.name} href={l.href} target="_blank" rel="noreferrer"
-                        className="flex items-center gap-2 text-slate-300 hover:text-blue-400 transition-colors">
-                        {l.name} <ExtIcon />
-                      </a>
-                    ))}
-                  </div>
-                </Card>
-              </div>
-
-              {/* Right — message form */}
-              <Card>
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Send a message</p>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    window.location.href = `mailto:${person.email}?subject=${encodeURIComponent(e.target.subject.value)}&body=${encodeURIComponent(e.target.message.value)}`;
-                  }}
-                  className="space-y-3"
+        {/* Projects */}
+        <section id="projects" className="scroll-mt-20 py-16">
+          <Title
+            path="projects"
+            sub={`${projects.length} builds, ${liveCount} deployed. Each one expands to the engineering details.`}
+          />
+          <div className="grid md:grid-cols-2 gap-4">
+            {projects.map((p, i) => {
+              const [nm, ...rest] = p.title.split(" — ");
+              return (
+                <article
+                  key={p.title}
+                  className={`panel flex flex-col ${i === 0 ? "md:col-span-2" : ""}`}
                 >
-                  <input
-                    name="subject"
-                    type="text"
-                    placeholder="Subject"
-                    required
-                    className="w-full rounded-lg bg-[#161920]/80 border border-slate-700/50 px-4 py-2.5 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:border-slate-500 transition-all"
-                  />
-                  <textarea
-                    name="message"
-                    rows={4}
-                    placeholder="Your message..."
-                    required
-                    className="w-full rounded-lg bg-[#161920]/80 border border-slate-700/50 px-4 py-2.5 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:border-slate-500 transition-all resize-none"
-                  />
-                  <button
-                    type="submit"
-                    className="w-full rounded-lg px-4 py-2.5 text-sm font-semibold bg-blue-500 border border-slate-700/50 hover:border-slate-500 hover:bg-[#1a1d24]/80 text-white transition-all"
+                  <div
+                    className="mono flex items-center justify-between border-b px-5 py-2.5 text-xs"
+                    style={{ borderColor: "var(--line)" }}
                   >
-                    Send via Email
-                  </button>
-                </form>
-              </Card>
-            </div>
-          </Section>
+                    <span className="mute">
+                      {nm
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/-$/, "")}
+                      /
+                    </span>
+                    <span
+                      style={{ color: p.live ? "var(--ok)" : "var(--mute)" }}
+                    >
+                      {p.live ? "● deployed" : "○ repo only"}
+                    </span>
+                  </div>
+                  <div className="p-5 flex-1 flex flex-col">
+                    <h3 className="text-xl font-semibold">{nm}</h3>
+                    <p className="mute text-[0.92rem]">{rest.join(" — ")}</p>
+                    <p className="mt-4 text-[0.95rem]">{p.points[0]}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {p.stack.map((s) => (
+                        <span
+                          key={s}
+                          className="mono rounded-sm border px-2 py-0.5 text-[0.72rem] cyan"
+                          style={{ borderColor: "var(--line)" }}
+                        >
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    {p.points.length > 1 && (
+                      <details className="mt-4">
+                        <summary className="mono text-xs mute hover:text-[color:var(--amber)] w-fit">
+                          <span className="chev">▸</span> {p.points.length - 1}{" "}
+                          engineering notes
+                        </summary>
+                        <ul className="mt-3 list-disc pl-5 space-y-2 text-[0.9rem] mute">
+                          {p.points.slice(1).map((pt, k) => (
+                            <li key={k}>{pt}</li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                    <div className="mt-auto pt-5 flex gap-3">
+                      {p.live && (
+                        <a
+                          href={p.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-primary"
+                        >
+                          live demo
+                        </a>
+                      )}
+                      {p.repo && (
+                        <a
+                          href={p.repo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn"
+                        >
+                          source
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
 
-          <footer className="pb-16 pt-2 text-[0.82rem] text-slate-700">
+        {/* Research */}
+        <section id="research" className="scroll-mt-20 py-16">
+          <Title
+            path="research"
+            sub={`${research.title.split(" — ")[0]}. Try the idea yourself: the solver below finds 24 with and without a dead-end memory, so you can see how much search it saves.`}
+          />
+          <div className="grid lg:grid-cols-2 gap-6">
+            <Solver />
+            <div className="panel p-5">
+              <p className="mono text-xs mute mb-3">thesis findings</p>
+              <ul className="list-disc pl-5 space-y-2.5 text-[0.92rem] mute">
+                {research.points.slice(0, 5).map((pt, i) => (
+                  <li key={i}>{pt}</li>
+                ))}
+              </ul>
+              <details className="mt-3">
+                <summary className="mono text-xs mute hover:text-[color:var(--amber)] w-fit">
+                  <span className="chev">▸</span> {research.points.length - 5}{" "}
+                  more
+                </summary>
+                <ul className="mt-3 list-disc pl-5 space-y-2.5 text-[0.92rem] mute">
+                  {research.points.slice(5).map((pt, i) => (
+                    <li key={i}>{pt}</li>
+                  ))}
+                </ul>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        {/* Skills */}
+        <section id="skills" className="scroll-mt-20 py-16">
+          <Title path="skills" />
+          <pre className="panel mono overflow-x-auto p-5 text-[0.85rem] leading-7">
+            <span className="amber">const</span> stack = {"{"}
+            {"\n"}
+            {Object.entries(code).map(([k, v]) => (
+              <span key={k}>
+                {"  "}
+                {k}: [
+                {[...new Set(v)].map((x, i, a) => (
+                  <span key={x}>
+                    <span className="cyan">"{x}"</span>
+                    {i < a.length - 1 ? ", " : ""}
+                  </span>
+                ))}
+                ],{"\n"}
+              </span>
+            ))}
+            {"}"};
+          </pre>
+        </section>
+
+        {/* Background */}
+        <section id="experience" className="scroll-mt-20 py-16">
+          <Title path="background" />
+          <ol className="border-l ml-1" style={{ borderColor: "var(--line)" }}>
+            {[
+              { title: education.title, time: education.meta, desc: "" },
+              ...experience,
+            ].map((e) => (
+              <li key={e.title} className="relative pl-7 pb-8 last:pb-0">
+                <span
+                  className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full"
+                  style={{ background: "var(--amber)" }}
+                />
+                <p className="mono text-xs cyan">{e.time}</p>
+                <h3 className="font-semibold">{e.title}</h3>
+                {e.desc && (
+                  <p className="mute text-[0.92rem] max-w-2xl">{e.desc}</p>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="scroll-mt-20 py-16">
+          <Title path="contact" />
+          <div className="panel mono p-6 text-sm md:text-base leading-8">
+            <div>
+              <span className="amber">$</span> mail{" "}
+              <a
+                className="cyan hover:underline break-all"
+                href={`mailto:${person.email}`}
+              >
+                {person.email}
+              </a>
+            </div>
+            <div>
+              <span className="amber">$</span> open{" "}
+              <a
+                className="cyan hover:underline"
+                href={person.links.github}
+                target="_blank"
+                rel="noreferrer"
+              >
+                github.com/mrznur
+              </a>
+            </div>
+            <div>
+              <span className="amber">$</span> open{" "}
+              <a
+                className="cyan hover:underline"
+                href={person.links.linkedin}
+                target="_blank"
+                rel="noreferrer"
+              >
+                linkedin.com/in/mahmudun-nur-miraz
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <footer className="mono py-10 text-xs mute flex justify-between">
+          <span>
             © {new Date().getFullYear()} {person.name}
-          </footer>
-        </main>
-      </div>
-    </>
+          </span>
+          <a href="#top" className="hover:text-[color:var(--amber)]">
+            back to top
+          </a>
+        </footer>
+      </main>
+    </div>
   );
 }
